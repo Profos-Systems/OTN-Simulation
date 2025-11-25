@@ -19,10 +19,13 @@ public class Token{
         OBJECT,
         VALUE,
         FIELD,
+        INT,
+        RANGE,
         HELP};
 
     public types type;
     public String value;
+    public int intValue;
 
     public Token(types type, String value){
 
@@ -30,10 +33,10 @@ public class Token{
         this.value = value;
     }
 
-    @Override
-    public String toString() {
+    public Token(int value){
 
-        return "[" + type + ": \"" + value + "\"]\n";
-    
+        type = types.INT;
+        intValue = value;
+
     }
 }

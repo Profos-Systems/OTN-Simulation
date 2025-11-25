@@ -6,9 +6,11 @@ $$
     [\text{Statement}] &\to
 
     \begin{cases}
-        [\text{Device}] [\text{Action}] [\text{Device Name}] [\text{Object}] [\text{Object Name}] [\text{*Optional* Value}]\\
+        [\text{Device}] [\text{Action}] [\text{Device Name}] [\text{Object}] [\text{Object Name}] \\
         [\text{Device}] [\text{Action}] [\text{Device Name}] [\text{Field}] [\text{Value}] \\
-        [\text{Device}] [\text{CREATE}] [\text{Device\_Name}] \\ 
+        [\text{Device}] [\text{Action}] [\text{Device Name}] [\text{Object}] [\text{Range}] \\
+        [\text{Device}] \text{CREATE} [\text{Device\_Name}] \\ 
+        [\text{Device}] \text{CREATE} [\text{Range}] \\
         [\text{Device}] \text{ Help} \\
         \text{HELP} \\
         \text{END} \\
@@ -51,6 +53,8 @@ $$
         [\text{WAVELENGTH}] \\
         [\text{FREQUENCY}] \\
     \end{cases}\\
+
+    [\text{Range}] &\to [\text{Int}] \text{ "," OR "-" } [\text{Int}] \\
 
     [\text{Object Name}] &\to String \\
 

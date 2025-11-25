@@ -49,6 +49,7 @@ public class Tokenizer {
             
             }
 
+
             String value = buffer.toString();
             value = value.toUpperCase();
             
@@ -62,6 +63,35 @@ public class Tokenizer {
             
             buffer.setLength(0); 
         }
+
+        else if(Character.isDigit((peek()))){
+
+            buffer.append(consume());
+
+            while((peek() != null) && Character.isDigit(peek())){
+
+                buffer.append(consume());
+
+            }
+
+            int value = (int)Double.parseDouble(buffer.toString());
+
+            tokens.add(new Token(value));
+
+            buffer.setLength(0);
+
+            while((peek() != null) && peek() == '-' || peek() == ','){
+
+                buffer.append(consume());
+
+            }
+
+            String range = buffer.toString();
+
+            tokens.add(new Token(Token.types.RANGE, range));
+
+        }
+
         else {
             
             consume();
