@@ -31,6 +31,7 @@ $$
     [\text{Object}] &\to
     
     \begin{cases}
+        [\text{ROADM}] \\
         [\text{WSS}] \\
         [\text{Port}] \\
         [\text{Transponder Card}]\\
