@@ -96,7 +96,7 @@ public class Parser {
         }
     }
 
-        public FieldNode parseField(){
+    public FieldNode parseField(){
 
         if(peek() != null && peek().type == Token.types.FIELD){
 
@@ -113,6 +113,46 @@ public class Parser {
         }
     }
 
+    public RangeNode parseRange(){
+
+        if((peek() != null) && (peek().type == Token.types.INT) && (peek(1) != null && peek(1).type == Token.types.RANGEHYPHEN)){
+
+            RangeNode rangeNode = new RangeNode(consume(), consume(2));
+            
+            return rangeNode;
+
+        }
+
+        if((peek() != null) && (peek().type == Token.types.INT) && (peek(1) != null && peek(1).type == Token.types.RANGECOMA)){
+
+            List <Token> tokenList = new ArrayList<>();
+            while(peek() != null && (peek().type == Token.types.INT || peek().type == Token.types.RANGECOMA)){
+
+                if(peek().type == Token.types.INT){
+                
+                    tokenList.add(consume());
+                
+                }else{
+
+                    consume();
+
+                }
+            }
+
+            RangeNode rangeNode = new RangeNode(tokenList);
+
+            return rangeNode;
+
+        }
+
+        else{
+
+            return null;
+
+        }
+
+    }
+
     public List<StatementNode> parse(){
 
         List<StatementNode> statementNodes = new ArrayList<>();
@@ -126,6 +166,7 @@ public class Parser {
             ObjectNameNode objectName = null;
             ValueNode value = null;
             FieldNode field = null;
+            RangeNode rangeNode = null;
 
             if(peek() != null && peek().type == Token.types.OBJECT){
                 deviceNode = parseObject();
@@ -165,6 +206,9 @@ public class Parser {
                 if(peek() != null && peek().type == Token.types.FIELD){
                     field = parseField();
                 }
+                if(peek() != null && peek().type == Token.types.INT){
+                    rangeNode = parseRange();
+                }
                 
                 if(deviceNode != null && actionNode != null && deviceName != null && objectNode != null && objectName != null){
                         if(value != null && field == null){
@@ -176,6 +220,12 @@ public class Parser {
                             statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, field, value));
                         }
                     }
+
+                if(deviceNode != null && actionNode != null && actionNode.actionToken.value.equals("CREATE") && rangeNode != null){
+
+                    statementNodes.add(new StatementNode(deviceNode, actionNode, rangeNode));
+
+                }
 
                 if(actionNode != null && actionNode.actionToken.value.equals("CREATE")){
 
@@ -199,20 +249,62 @@ public class Parser {
 
     private Token peek(){
 
-    if (index >= tokens.size()){ 
-        return null;
+        if (index >= tokens.size()){ 
 
-    } 
-    else {
-    
-        return tokens.get(index); 
-    
+            return null;
+
+        } 
+        else {
+        
+            return tokens.get(index); 
+        
+        }
     }
-}
+
+    private Token peek(int offset){
+
+        int peekIndex = index + offset;
+        if(peekIndex >= tokens.size()){
+
+            return null;
+        
+        }
+        else {
+        
+            return tokens.get(peekIndex);
+       
+        }
+
+    }
+
+
 
     private Token consume(){
 
+        if (index >= tokens.size()) {
+
+            return null;
+        
+        }
+
         return tokens.get(index++);
+
+    }
+
+    private Token consume(int offset){
+
+        Token last = null;
+
+        for (int i = 0; i < offset; i++) {
+
+            last = consume();
+            
+            if (last == null){
+                
+                break;
+            }
+        }
+        return last;
 
     }
 

@@ -21,12 +21,14 @@ public class StatementNode {
     public ObjectNameNode objectNameNode;
     public ValueNode valueNode;
     public FieldNode fieldNode;
+    public RangeNode rangeNode;
     
     public static enum types{
         ASSIGN_VALUE,
         ASSIGN,
         SET_VALUES,
         INIT,
+        RANGE,
         HELP;
     }
 
@@ -96,6 +98,16 @@ public class StatementNode {
         actionNode = action;
         deviceName = name;
         type = types.INIT;
+
+    }
+
+    // Create a range of devices
+    public StatementNode(ObjectNode device, ActionNode action, RangeNode range){
+
+        deviceNode = device;
+        actionNode = action;
+        rangeNode = range;
+        type = types.RANGE;
 
     }
 

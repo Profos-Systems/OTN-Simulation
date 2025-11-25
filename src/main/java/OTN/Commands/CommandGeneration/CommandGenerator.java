@@ -41,6 +41,7 @@ public class CommandGenerator {
 
                     case StatementNode.types.HELP -> outputs.append(helpCommandGenerate());
                     case StatementNode.types.INIT -> outputs.append(initCommandGenerate(stmt));
+                    case StatementNode.types.RANGE -> outputs.append(deviceRangeGenerate(stmt));
                     default -> outputs.append("Unable to generate commands!");
                 }
             
@@ -80,5 +81,27 @@ public class CommandGenerator {
         output.append("Displaying General Help Information!");
         output.append("\n\n");
         return output;
+    }
+
+    public StringBuilder deviceRangeGenerate(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+        output.append("Generating a range of ");
+        int first = stmt.rangeNode.firstInt.intValue;
+        int second = stmt.rangeNode.secondInt.intValue;
+        output.append(first);
+        output.append("-");
+        output.append(second);
+        output.append(" ");
+        output.append(" which is ");
+        int total = second - first;
+        output.append(total);
+        output.append(" ");
+        output.append(stmt.deviceNode.object.value);
+        output.append("s\n\n");
+        
+
+        return output;
+
     }
 }

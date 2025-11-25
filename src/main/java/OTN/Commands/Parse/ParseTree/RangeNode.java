@@ -10,34 +10,38 @@ You should have received a copy of the GNU General Public License along with OTN
 
 */
 
-package OTN.Commands.Tokens;
+package OTN.Commands.Parse.ParseTree;
+import OTN.Commands.Tokens.Token;
+import java.util.List;
 
-public class Token{
+public class RangeNode {
+    
+    public Token firstInt;
+    public Token hyphen;
+    public Token secondInt;
+    public List<Token> tokenList;
+    public enum types{
 
-    public enum types {
-        ACTION,
-        OBJECT,
-        VALUE,
-        FIELD,
-        INT,
-        RANGEHYPHEN,
-        RANGECOMA,
-        HELP};
+        HYPHEN,
+        COMA
 
+    };
     public types type;
-    public String value;
-    public int intValue;
 
-    public Token(types type, String value){
+    public RangeNode(Token firstInt, Token secondInt){
 
-        this.type = type;
-        this.value = value;
-    }
-
-    public Token(int value){
-
-        type = types.INT;
-        intValue = value;
+        type = types.HYPHEN;
+        this.firstInt = firstInt;
+        this.secondInt = secondInt;
 
     }
+
+    public RangeNode(List<Token> tokens){
+
+        type = types.COMA;
+        tokenList = tokens;
+
+    }
+    
+
 }

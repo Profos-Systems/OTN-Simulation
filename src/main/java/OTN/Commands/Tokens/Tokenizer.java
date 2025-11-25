@@ -66,29 +66,39 @@ public class Tokenizer {
 
         else if(Character.isDigit((peek()))){
 
-            buffer.append(consume());
-
             while((peek() != null) && Character.isDigit(peek())){
 
                 buffer.append(consume());
 
             }
 
-            int value = (int)Double.parseDouble(buffer.toString());
+            int value = Math.abs((int)Double.parseDouble(buffer.toString()));
+
+            System.out.println(value);
 
             tokens.add(new Token(value));
 
             buffer.setLength(0);
 
-            while((peek() != null) && peek() == '-' || peek() == ','){
+            if((peek() != null) && peek().equals('-')){
 
                 buffer.append(consume());
 
+                String range = buffer.toString();
+
+                tokens.add(new Token(Token.types.RANGEHYPHEN, range));
+
             }
 
-            String range = buffer.toString();
+            if((peek() != null) && peek().equals(',')){
 
-            tokens.add(new Token(Token.types.RANGE, range));
+                buffer.append(consume());
+
+                String range = buffer.toString();
+
+                tokens.add(new Token(Token.types.RANGECOMA, range));
+                
+            }
 
         }
 
