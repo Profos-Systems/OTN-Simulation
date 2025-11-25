@@ -66,9 +66,11 @@ public class Tokenizer {
 
         else if(Character.isDigit((peek()))){
 
+            while(peek() != null && Character.isDigit(peek())){
+            
+                buffer.append(consume());
 
-            buffer.append(consume());
-
+            }
 
             int value = Math.abs((int)Double.parseDouble(buffer.toString()));
 
