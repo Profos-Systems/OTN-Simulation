@@ -192,7 +192,7 @@ public class Parser {
                     deviceName = parseObjectName();
                 }
                 
-                if(peek() != null && peek().type == Token.types.OBJECT){
+                if(peek() != null && peek().type == Token.types.OBJECT && !actionNode.actionToken.value.equals("CREATE")){
                     objectNode = parseObject();
                 }
                 
