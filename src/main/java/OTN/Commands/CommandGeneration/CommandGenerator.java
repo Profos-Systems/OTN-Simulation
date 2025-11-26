@@ -14,16 +14,21 @@ package OTN.Commands.CommandGeneration;
 
 import OTN.Commands.Parse.ParseTree.StatementNode;
 import OTN.System.Devices.Nodes.ROADM.ROADM;
+import OTN.Network.Orchestration;
+import OTN.System.Devices.Cards.WSS.WSS;
+
 import java.util.List;
 
 
 public class CommandGenerator {
     
     List <StatementNode> StatementNodes;
+    Orchestration networkOrchestrator;
 
-    public CommandGenerator(List <StatementNode> StatementNodes){
+    public CommandGenerator(List <StatementNode> StatementNodes, Orchestration networkOrchestrator){
 
         this.StatementNodes = StatementNodes;
+        this.networkOrchestrator = networkOrchestrator;
 
     }
 
@@ -60,17 +65,14 @@ public class CommandGenerator {
 
     public StringBuilder initCommandGenerate(StatementNode stmt){
 
-        ROADM ROADMNode;
         StringBuilder output = new StringBuilder();
 
-        if(stmt.deviceNode.object.value.equals("ROADM")){
+        switch(stmt.deviceNode.object.value){
 
-            ROADMNode = new ROADM(stmt.deviceName.name.value);
+            case "ROADM" -> output = initROADM(stmt);
+            case "WSS" -> output = initWSS(stmt);
 
-            output.append("Created ROADM: ");
-            output.append(ROADMNode.getName());
-            output.append("\n\n");
-        }  
+        }
         
         return output;
     }
@@ -100,6 +102,42 @@ public class CommandGenerator {
         output.append(stmt.deviceNode.object.value);
         output.append("s\n\n");
         
+
+        return output;
+
+    }
+
+    public StringBuilder initROADM(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        ROADM ROADMNode;
+
+        ROADMNode = new ROADM(stmt.deviceName.name.value);
+
+        output.append("Created ROADM: ");
+        output.append(ROADMNode.getName());
+        output.append("\n\n");  
+
+        networkOrchestrator.addNode(ROADMNode);
+
+        return output;
+
+    }
+
+    public StringBuilder initWSS(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        WSS wss;
+
+        wss = new WSS(stmt.deviceName.name.value);
+
+        output.append("Created WSS: ");
+        output.append(wss.getName());
+        output.append("\n\n");
+
+        networkOrchestrator.addNode(wss);
 
         return output;
 

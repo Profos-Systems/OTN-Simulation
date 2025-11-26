@@ -8,6 +8,8 @@ This is a collection of all the commands for the simulation, all of which can be
 
 **ROADM Initialization:** ROADM CREATE {*ROADM Name*}
 
+**WSS Initialization:** WSS CREATE {*WSS Name*}
+
 **Range Initialization** {*Device*} CREATE *Int*-*Int*
 
 ***Example:*** PORT CREATE 1-9 (Creates Port's 1 Through 9)

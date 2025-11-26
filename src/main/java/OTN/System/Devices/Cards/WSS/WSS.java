@@ -37,7 +37,8 @@ public class WSS{
     // WSS Configurable pieces
     int portCount;
     String [] sites = new String[0];
-    private final int centerPortNumber; 
+    private int centerPortNumber; 
+    WSSPort [] ports;
 
     // Set amount of ports and port names
     public WSS(String name, String[] toSetSites, int portNum){
@@ -52,12 +53,44 @@ public class WSS{
         centerPortNumber = (portNum + 1) / 2;
         // Map Transponders to the WSS port
         TransponderCard mappedCard = new TransponderCard("Example", portCount);
-        WSSPort [] ports = new WSSPort[portCount];
+        ports = new WSSPort[portCount];
         for(int i = 0; i < portCount; i++){
 
             ports[i] = new WSSPort(sites[i], i, mappedCard.getPort(i));
 
         }
+    }
+
+    public WSS(String name){
+
+        this.name = name;
+        
+    }
+
+    public void setPortNum(int portNum){
+
+        if (portNum < 1){
+
+            throw new IllegalArgumentException("Port count must be positive!");
+
+        }
+
+        portCount = portNum;
+        centerPortNumber = (portNum + 1) / 2;
+
+        TransponderCard mappedCard = new TransponderCard("Example", portCount);
+        ports = new WSSPort[portCount];
+        for(int i = 0; i < portCount; i++){
+
+            ports[i] = new WSSPort(sites[i], i, mappedCard.getPort(i));
+
+        }
+    }
+
+    public void setPortNames(String [] toSetSites){
+
+        sites = toSetSites;
+
     }
     
     private int getPhysicalIndex(int portNumber) {
@@ -81,8 +114,8 @@ public class WSS{
     
    // Calculates the spatial position (X-coordinate in mm) where a wavelength lands on the LCoS.
     public double getXPosition(double wavelength){
-        double thetaDRad = 0;
-        double sinThetaD = 0;
+        double thetaDRad;
+        double sinThetaD;
         
         // 1. Calculate the diffraction angle (theta_d) for the given wavelength
         try{

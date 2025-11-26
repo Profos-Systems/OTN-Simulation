@@ -20,6 +20,7 @@ import OTN.Commands.Tokens.Token;
 import OTN.Commands.Parse.Parser;
 import OTN.Commands.Parse.ParseTree.StatementNode;
 import OTN.Commands.CommandGeneration.*;
+import OTN.Network.Orchestration;
 
 
 public class Boot {
@@ -28,11 +29,12 @@ public class Boot {
 
     public Boot(){
         
+        Orchestration networkOrchestrator = new Orchestration();
         config = loadConfig();
         List<Token> tokens = TokenizeConfig(config);
         Parser parser = new Parser(tokens);
         List<StatementNode> tree = parser.parse();
-        CommandGenerator generate = new CommandGenerator(tree);
+        CommandGenerator generate = new CommandGenerator(tree, networkOrchestrator);
         StringBuilder output = generate.generator();
 
         System.out.println(output.toString());

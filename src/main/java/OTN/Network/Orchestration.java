@@ -10,16 +10,31 @@ You should have received a copy of the GNU General Public License along with OTN
 
 */
 
-package OTN.Commands.Parse.ParseTree;
-import OTN.Commands.Tokens.Token;
+package OTN.Network;
+import OTN.System.Devices.Nodes.ROADM.ROADM;
+import OTN.System.Devices.Cards.WSS.WSS;
+import java.util.List;
+import java.util.ArrayList;
 
-public class ObjectNode{
+public class Orchestration {
+
+    public List<ROADM> ROADMS = new ArrayList<>();
+    public List<WSS> WSSS = new ArrayList<>();
     
-    public Token object;
+    public Orchestration(){
 
-    public ObjectNode(Token object){
 
-        this.object = object;
+    }
+
+    public void addNode(ROADM node){
+
+        ROADMS.add(node);
+
+    }
+
+    public void addNode(WSS node){
+
+        WSSS.add(node);
 
     }
 
