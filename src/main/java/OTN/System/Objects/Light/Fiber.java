@@ -11,21 +11,29 @@ You should have received a copy of the GNU General Public License along with OTN
 */
 
 package OTN.System.Objects.Light;
-import OTN.System.Devices.Cards.Transponder.Assets.Transponder;
+
 public class Fiber {
     
     double length;
     final double ATTENUATION = .2;
     String label;
-    Transponder ASide;
-    Transponder ZSide;
 
-    public Fiber(double len, String lb, Transponder A, Transponder Z){
+    public Fiber(double len, String lb){
 
         length = len;
         label = lb;
-        ASide = A;
-        ZSide = Z;
+    }
+
+    public Fiber(String name){
+
+        label = name;
+
+    }
+
+    public void setLength(double len){
+
+        length = len;
+
     }
 
     public String getLabel(){

@@ -14,15 +14,22 @@ package OTN.Network;
 import OTN.System.Devices.Nodes.ROADM.ROADM;
 import OTN.System.Devices.Cards.WSS.WSS;
 import OTN.System.Devices.Cards.Transponder.TransponderCard;
+import OTN.System.Devices.Cards.WSS.Assets.WSSPort;
+import OTN.System.Devices.Cards.Transponder.Assets.Transponder;
+import OTN.System.Objects.Light.Fiber;
+
 import java.util.List;
 import java.util.ArrayList;
 
 public class Orchestration {
 
-    public List<ROADM> ROADMS = new ArrayList<>();
-    public List<WSS> WSSS = new ArrayList<>();
-    public List<TransponderCard> Transponder_Cards = new ArrayList<>();
-    
+    List<ROADM> ROADMS = new ArrayList<>();
+    List<WSS> WSSS = new ArrayList<>();
+    List<TransponderCard> Transponder_Cards = new ArrayList<>();
+    List<WSSPort> WSSPorts = new ArrayList<>();
+    List<Transponder> Transponders = new ArrayList<>();
+    List<Fiber> Fibers = new ArrayList<>();
+
     public Orchestration(){
 
 
@@ -46,4 +53,21 @@ public class Orchestration {
 
     }
 
+    public void addNode(WSSPort node){
+
+        WSSPorts.add(node);
+
+    }
+
+    public void addNode(Transponder node){
+
+        Transponders.add(node);
+
+    }
+
+    public void addNode(Fiber node){
+
+        Fibers.add(node);
+
+    }
 }

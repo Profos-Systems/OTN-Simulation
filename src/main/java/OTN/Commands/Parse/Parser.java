@@ -113,7 +113,7 @@ public class Parser {
         }
     }
 
-    public RangeNode parseRange(){
+    private RangeNode parseRange(){
 
         if((peek() != null) && (peek().type == Token.types.INT) && (peek(1) != null && peek(1).type == Token.types.RANGEHYPHEN)){
 
@@ -227,7 +227,7 @@ public class Parser {
 
                 }
 
-                if(actionNode != null && actionNode.actionToken.value.equals("CREATE")){
+                else if(deviceNode != null && actionNode != null && actionNode.actionToken.value.equals("CREATE")){
 
                     statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName));
 

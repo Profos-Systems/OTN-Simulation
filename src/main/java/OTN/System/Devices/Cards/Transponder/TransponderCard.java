@@ -63,4 +63,10 @@ public class TransponderCard {
 
     }
 
+    public int getPortCount(){
+
+        return portCount;
+
+    }
+
 }

@@ -56,7 +56,7 @@ public class WSS{
         ports = new WSSPort[portCount];
         for(int i = 0; i < portCount; i++){
 
-            ports[i] = new WSSPort(sites[i], i, mappedCard.getPort(i));
+            ports[i] = new WSSPort(sites[i], mappedCard.getPort(i));
 
         }
     }
@@ -82,7 +82,7 @@ public class WSS{
         ports = new WSSPort[portCount];
         for(int i = 0; i < portCount; i++){
 
-            ports[i] = new WSSPort(sites[i], i, mappedCard.getPort(i));
+            ports[i] = new WSSPort(sites[i], mappedCard.getPort(i));
 
         }
     }

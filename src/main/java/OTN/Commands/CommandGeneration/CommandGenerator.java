@@ -17,6 +17,9 @@ import OTN.System.Devices.Nodes.ROADM.ROADM;
 import OTN.Network.Orchestration;
 import OTN.System.Devices.Cards.WSS.WSS;
 import OTN.System.Devices.Cards.Transponder.TransponderCard;
+import OTN.System.Devices.Cards.WSS.Assets.WSSPort;
+import OTN.System.Devices.Cards.Transponder.Assets.Transponder;
+import OTN.System.Objects.Light.Fiber;
 
 import java.util.List;
 
@@ -46,8 +49,8 @@ public class CommandGenerator {
                 switch(stmt.type){
 
                     case StatementNode.types.HELP -> outputs.append(helpCommandGenerate());
-                    case StatementNode.types.INIT -> outputs.append(initCommandGenerate(stmt));
                     case StatementNode.types.RANGEINIT -> outputs.append(deviceRangeGenerate(stmt));
+                    case StatementNode.types.INIT -> outputs.append(initCommandGenerate(stmt));
                     default -> outputs.append("Unable to generate commands!");
                 }
             
@@ -73,7 +76,10 @@ public class CommandGenerator {
             case "ROADM" -> output = initROADM(stmt);
             case "WSS" -> output = initWSS(stmt);
             case "TRANSPONDER_CARD" -> output = initTransponderCard(stmt);
-
+            case "WSS_PORT" -> output = initWSSPORT(stmt);
+            case "TRANSPONDER" -> output = initTransponder(stmt);
+            case "FIBER" -> output = initFiber(stmt);
+ 
         }
         
         return output;
@@ -155,4 +161,53 @@ public class CommandGenerator {
 
         return output;
     }
+
+    private StringBuilder initWSSPORT(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        WSSPort wssPort = new WSSPort(stmt.deviceName.name.value);
+
+        output.append("Created WSS Port: ");
+        output.append(wssPort.getName());
+        output.append("\n\n");
+
+        networkOrchestrator.addNode(wssPort);
+
+        return output;
+    
+    }
+
+    private StringBuilder initTransponder(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        Transponder transponder = new Transponder(stmt.deviceName.name.value);
+
+        output.append("Created Transponder: ");
+        output.append(transponder.getName());
+        output.append("\n\n");
+
+        networkOrchestrator.addNode(transponder);
+
+        return output;
+
+    }
+
+    private StringBuilder initFiber(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        Fiber fiber = new Fiber(stmt.deviceName.name.value);
+
+        output.append("Created Fiber: ");
+        output.append(fiber.getLabel());
+        output.append("\n\n");
+
+        networkOrchestrator.addNode(fiber);
+
+        return output;
+
+    }
+
 }

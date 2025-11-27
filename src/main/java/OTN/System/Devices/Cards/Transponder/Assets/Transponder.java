@@ -18,13 +18,26 @@ public class Transponder {
     boolean duplex; // Half (0) or Full (1)
     double rxSignalStrength_DBM;
     double txSignalStrength_DBM;
-    final double RXSENSITIVITY_DBM = -40;
+    public final double RXSENSITIVITY_DBM = -40;
+    String name;
 
     public Transponder(double speed, boolean duplex, double txSignalStrength_DBM){
 
         speed = this.speed;
         duplex = this.duplex;
         txSignalStrength_DBM = this.txSignalStrength_DBM;
+    }
+
+    public Transponder(String name){
+
+        this.name = name;
+
+    }
+
+    public String getName(){
+
+        return name;
+
     }
 
     public double getSpeed(){
@@ -68,5 +81,17 @@ public class Transponder {
     public void setTXSignalStrength(double signalStrength){
 
         txSignalStrength_DBM = signalStrength;
+    }
+
+    public void setSpeed(double speed){
+
+        this.speed = speed;
+
+    }
+
+    public void setDuplex(boolean duplex){
+
+        this.duplex = duplex;
+
     }
 }

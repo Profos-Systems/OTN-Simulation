@@ -15,14 +15,24 @@ import OTN.System.Devices.Cards.Transponder.Assets.Transponder;
 public class WSSPort {
     
     String portSite;
-    int portIndex;
     Transponder mappedTransponder;
 
-    public WSSPort(String site, int index, Transponder transponderToMap){
+    public WSSPort(String site, Transponder transponderToMap){
 
         portSite = site;
-        portIndex = index;
         mappedTransponder = transponderToMap;
+
+    }
+
+    public WSSPort(String site){
+
+        portSite = site;
+
+    }
+
+    public String getName(){
+
+        return portSite;
 
     }
 
@@ -36,6 +46,12 @@ public class WSSPort {
     public void setOutgoingSignalStrength(Transponder outgoing, double signalStrength){
 
         outgoing.setTXSignalStrength(signalStrength);
+
+    }
+
+    public Transponder getMappedTransponder(){
+
+        return mappedTransponder;
 
     }
 }
