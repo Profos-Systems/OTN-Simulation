@@ -13,6 +13,7 @@ You should have received a copy of the GNU General Public License along with OTN
 package OTN.Network;
 import OTN.System.Devices.Nodes.ROADM.ROADM;
 import OTN.System.Devices.Cards.WSS.WSS;
+import OTN.System.Devices.Cards.Transponder.TransponderCard;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class Orchestration {
 
     public List<ROADM> ROADMS = new ArrayList<>();
     public List<WSS> WSSS = new ArrayList<>();
+    public List<TransponderCard> Transponder_Cards = new ArrayList<>();
     
     public Orchestration(){
 
@@ -35,6 +37,12 @@ public class Orchestration {
     public void addNode(WSS node){
 
         WSSS.add(node);
+
+    }
+
+    public void addNode(TransponderCard node){
+
+        Transponder_Cards.add(node);
 
     }
 

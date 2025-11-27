@@ -28,9 +28,14 @@ public class StatementNode {
         ASSIGN,
         SET_VALUES,
         INIT,
-        RANGE,
+        RANGEINIT,
+        RANGEMOD,
+        RANGEDELETE,
+        RANGEASSIGN,
         HELP;
     }
+
+    public types rangeType;
 
     public types type;
 
@@ -107,7 +112,7 @@ public class StatementNode {
         deviceNode = device;
         actionNode = action;
         rangeNode = range;
-        type = types.RANGE;
+        type = types.RANGEINIT;
 
     }
 

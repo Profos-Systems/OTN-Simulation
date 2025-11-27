@@ -32,6 +32,25 @@ public class TransponderCard {
         }
     }
 
+    public TransponderCard(String name){
+
+        this.name = name;
+
+    }
+
+    public void setPort(int portCount){
+
+
+        this.portCount = portCount;
+        this.ports = new Transponder [portCount];
+
+        for(int i = 0; i < ports.length; i++){
+
+            ports[i] = new Transponder(1000, true, 2);
+
+        }
+    }
+
     public Transponder getPort(int index){
 
         return ports[index];

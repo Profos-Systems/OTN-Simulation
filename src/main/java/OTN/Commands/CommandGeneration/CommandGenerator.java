@@ -16,6 +16,7 @@ import OTN.Commands.Parse.ParseTree.StatementNode;
 import OTN.System.Devices.Nodes.ROADM.ROADM;
 import OTN.Network.Orchestration;
 import OTN.System.Devices.Cards.WSS.WSS;
+import OTN.System.Devices.Cards.Transponder.TransponderCard;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class CommandGenerator {
 
                     case StatementNode.types.HELP -> outputs.append(helpCommandGenerate());
                     case StatementNode.types.INIT -> outputs.append(initCommandGenerate(stmt));
-                    case StatementNode.types.RANGE -> outputs.append(deviceRangeGenerate(stmt));
+                    case StatementNode.types.RANGEINIT -> outputs.append(deviceRangeGenerate(stmt));
                     default -> outputs.append("Unable to generate commands!");
                 }
             
@@ -63,7 +64,7 @@ public class CommandGenerator {
 
     }
 
-    public StringBuilder initCommandGenerate(StatementNode stmt){
+    private StringBuilder initCommandGenerate(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
 
@@ -71,13 +72,14 @@ public class CommandGenerator {
 
             case "ROADM" -> output = initROADM(stmt);
             case "WSS" -> output = initWSS(stmt);
+            case "TRANSPONDER_CARD" -> output = initTransponderCard(stmt);
 
         }
         
         return output;
     }
 
-    public StringBuilder helpCommandGenerate(){
+    private StringBuilder helpCommandGenerate(){
 
         StringBuilder output = new StringBuilder();
         output.append("Displaying General Help Information!");
@@ -85,7 +87,7 @@ public class CommandGenerator {
         return output;
     }
 
-    public StringBuilder deviceRangeGenerate(StatementNode stmt){
+    private StringBuilder deviceRangeGenerate(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
         output.append("Generating a range of ");
@@ -107,13 +109,11 @@ public class CommandGenerator {
 
     }
 
-    public StringBuilder initROADM(StatementNode stmt){
+    private StringBuilder initROADM(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
 
-        ROADM ROADMNode;
-
-        ROADMNode = new ROADM(stmt.deviceName.name.value);
+        ROADM ROADMNode = new ROADM(stmt.deviceName.name.value);
 
         output.append("Created ROADM: ");
         output.append(ROADMNode.getName());
@@ -125,13 +125,11 @@ public class CommandGenerator {
 
     }
 
-    public StringBuilder initWSS(StatementNode stmt){
+    private StringBuilder initWSS(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
 
-        WSS wss;
-
-        wss = new WSS(stmt.deviceName.name.value);
+        WSS wss = new WSS(stmt.deviceName.name.value);
 
         output.append("Created WSS: ");
         output.append(wss.getName());
@@ -141,5 +139,20 @@ public class CommandGenerator {
 
         return output;
 
+    }
+
+    private StringBuilder initTransponderCard(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        TransponderCard transponderCard = new TransponderCard(stmt.deviceName.name.value);
+
+        output.append("Created Transponder Card: ");
+        output.append(transponderCard.getName());
+        output.append("\n\n");
+
+        networkOrchestrator.addNode(transponderCard);
+
+        return output;
     }
 }
