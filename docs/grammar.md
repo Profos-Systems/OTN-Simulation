@@ -33,7 +33,7 @@ $$
     \begin{cases}
         [\text{ROADM}] \\
         [\text{WSS}] \\
-        [\text{WSS_Port}]
+        [\text{WSS\_Port}]
         [\text{Port}] \\
         [\text{Transponder Card}]\\
         [\text{Transponder}]\\
