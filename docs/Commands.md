@@ -32,10 +32,6 @@ This is a collection of all the commands for the simulation, all of which can be
 
 ## Commands To Be Implemented
 
-### Initialization
-
-**Device Initializations For:** WSS, PORT, TRANSPONDER_CARD, TRANSPONDER, FIBER
-
 ### Card Object Mapping
 
 **Need Mapping for All Objects**

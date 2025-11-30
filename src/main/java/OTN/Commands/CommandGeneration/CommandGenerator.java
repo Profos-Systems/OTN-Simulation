@@ -20,6 +20,8 @@ import OTN.System.Devices.Cards.Transponder.TransponderCard;
 import OTN.System.Devices.Cards.WSS.Assets.WSSPort;
 import OTN.System.Devices.Cards.Transponder.Assets.Transponder;
 import OTN.System.Objects.Light.Fiber;
+import OTN.Commands.Tokens.Token;
+import OTN.Commands.Parse.ParseTree.*;
 
 import java.util.List;
 
@@ -106,10 +108,16 @@ public class CommandGenerator {
         output.append(" which is ");
         int total = second - first;
         output.append(total);
-        output.append(" ");
-        output.append(stmt.deviceNode.object.value);
-        output.append("s\n\n");
-        
+        output.append("\n");
+        for (int i = first; i <= second; i++){
+
+            String name = Integer.toString(i);
+            Token nameToken = new Token(Token.types.VALUE, name);
+            stmt.deviceName = new ObjectNameNode(nameToken);
+            StatementNode rangeStmt = new StatementNode(stmt.deviceNode, stmt.actionNode, stmt.deviceName);
+            output.append(initCommandGenerate(rangeStmt));
+
+        }
 
         return output;
 
