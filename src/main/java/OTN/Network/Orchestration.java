@@ -70,4 +70,22 @@ public class Orchestration {
         Fibers.add(node);
 
     }
+
+    public ROADM getROADMByName(String name){
+
+        for(int i = 0; i < ROADMS.size(); i++){
+
+            String checkName = ROADMS.get(i).getName();
+
+            if(name.equals(checkName)){
+
+                return ROADMS.get(i);
+
+            }
+
+        }
+        
+        return null;
+
+    }
 }

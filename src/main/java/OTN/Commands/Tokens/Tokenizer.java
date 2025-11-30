@@ -55,7 +55,7 @@ public class Tokenizer {
             
             switch (value) {
                 case "ROADM", "WSS", "WSS_PORT" , "TRANSPONDER_CARD", "TRANSPONDER", "FIBER" -> tokens.add(new Token(Token.types.OBJECT, value));
-                case "SPEED", "DUPLEX", "TX_POWER", "PORT_COUNT", "LABEL" , "PORT_INDEX", "LENGTH", "A_SIDE", "Z_SIDE" , "WAVELENGTH", "FREQUENCY" -> tokens.add(new Token(Token.types.FIELD, value));
+                case "SPEED", "DUPLEX", "TX_POWER", "PORT_COUNT", "LABEL" , "PORT_INDEX", "LENGTH", "A_SIDE", "Z_SIDE" , "WAVELENGTH", "FREQUENCY", "NAME" -> tokens.add(new Token(Token.types.FIELD, value));
                 case "ADD", "MODIFY", "REMOVE" , "CREATE", "SET" -> tokens.add(new Token(Token.types.ACTION, value));
                 case "HELP" -> tokens.add(new Token(Token.types.HELP, value));
                 default -> tokens.add(new Token(Token.types.VALUE, value));

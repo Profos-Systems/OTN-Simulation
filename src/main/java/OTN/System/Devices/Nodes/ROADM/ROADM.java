@@ -22,12 +22,22 @@ public class ROADM {
     List<TransponderCard> clientTransponderCards;
     List<TransponderCard> lineTransponderCards;
 
+    public ROADM(){
+
+    }
+
     public ROADM(String name){
 
         this.name = name;
     
     }
     
+    public void setName(String name){
+
+        this.name = name;
+
+    }
+
     public ROADM(String name, WSS wss, TransponderCard client, TransponderCard line){
 
         this.name = name;

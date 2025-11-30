@@ -157,6 +157,12 @@ public class Parser {
 
         List<StatementNode> statementNodes = new ArrayList<>();
 
+        for(int i = 0; i < tokens.size(); i++){
+
+            System.out.println(peek(i).value);
+
+        }
+
         while(peek() != null){
 
             ObjectNode deviceNode = null;
@@ -170,6 +176,7 @@ public class Parser {
 
             if(peek() != null && peek().type == Token.types.OBJECT){
                 deviceNode = parseObject();
+                System.out.println("Found device " + deviceNode.object.value);
             }
             
         
@@ -187,9 +194,24 @@ public class Parser {
 
             else if(peek() != null && peek().type == Token.types.ACTION){
                 actionNode = parseAction();
+                System.out.println("Found action " + actionNode.actionToken.value);
+
+                if(peek() != null && peek().type == Token.types.FIELD){
+                    field = parseField();
+                    System.out.println("Field value found " + field.field.value);
+                    if(peek() != null && peek().type == Token.types.VALUE){
+                        deviceName = parseObjectName();
+                        System.out.println("Found device name " + deviceName.name.value);
+                    }
+                    if(peek() != null && peek().type == Token.types.VALUE){
+                        value = parseValue();
+                        System.out.println("Found value " + value.value.value);
+                    }
+                }
 
                 if(peek() != null && peek().type == Token.types.VALUE){
                     deviceName = parseObjectName();
+                    System.out.println("Found device name " + deviceName.name.value);
                 }
                 
                 if(peek() != null && peek().type == Token.types.OBJECT && !actionNode.actionToken.value.equals("CREATE")){
@@ -198,36 +220,38 @@ public class Parser {
                 
                 if(peek() != null && peek().type == Token.types.VALUE){
                     objectName = parseObjectName();
+                    System.out.println("Object Name found " + objectName.name.value);
                 }
                 
                 if(peek() != null && peek().type == Token.types.VALUE){
                     value = parseValue();
-                }
-                if(peek() != null && peek().type == Token.types.FIELD){
-                    field = parseField();
+                    System.out.println("Value found " + value.value.value);
                 }
                 if(peek() != null && peek().type == Token.types.INT){
                     rangeNode = parseRange();
                 }
                 
-                if(deviceNode != null && actionNode != null && deviceName != null && objectNode != null && objectName != null){
+                if(deviceNode != null && deviceName != null && objectNode != null && objectName != null){
                         if(value != null && field == null){
                             statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, objectNode, objectName, value));
                         } else {
                             statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, objectNode, objectName));
                         }
-                        if(field != null && value != null){
-                            statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, field, value));
-                        }
                     }
 
-                if(deviceNode != null && actionNode != null && actionNode.actionToken.value.equals("CREATE") && rangeNode != null){
+                else if(deviceNode != null && deviceName != null && field != null && value != null && actionNode.actionToken.value.equals("MODIFY")){
+                    
+                    statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, field, value));
+                    
+                }
+
+                else if(deviceNode != null && actionNode.actionToken.value.equals("CREATE") && rangeNode != null){
 
                     statementNodes.add(new StatementNode(deviceNode, actionNode, rangeNode));
 
                 }
 
-                else if(deviceNode != null && actionNode != null && actionNode.actionToken.value.equals("CREATE")){
+                else if(deviceNode != null  && actionNode.actionToken.value.equals("CREATE")){
 
                     statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName));
 
@@ -237,6 +261,7 @@ public class Parser {
     
                     if(peek() != null) {
                         consume();
+                        System.out.println("No matching statements");
                     }
                 }
             }

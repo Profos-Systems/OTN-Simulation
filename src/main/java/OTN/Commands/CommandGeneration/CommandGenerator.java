@@ -42,17 +42,21 @@ public class CommandGenerator {
 
         StringBuilder outputs = new StringBuilder();
 
+
         if(StatementNodes != null && !StatementNodes.isEmpty()){
 
             for(int i = 0; i < StatementNodes.size(); i++){
             
                 StatementNode stmt = StatementNodes.get(i);
 
+                System.out.println(stmt.type);
+
                 switch(stmt.type){
 
                     case StatementNode.types.HELP -> outputs.append(helpCommandGenerate());
                     case StatementNode.types.RANGEINIT -> outputs.append(deviceRangeGenerate(stmt));
                     case StatementNode.types.INIT -> outputs.append(initCommandGenerate(stmt));
+                    case StatementNode.types.SET_VALUES -> outputs.append(setValues(stmt));
                     default -> outputs.append("Unable to generate commands!");
                 }
             
@@ -213,6 +217,56 @@ public class CommandGenerator {
         output.append("\n\n");
 
         networkOrchestrator.addNode(fiber);
+
+        return output;
+
+    }
+
+    private StringBuilder setValues(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        switch(stmt.fieldNode.field.value){
+
+            case "NAME":
+                switch(stmt.deviceNode.object.value){
+                    
+                    case "ROADM" -> output.append(setROADMName(stmt));
+                    // case "WSS" -> output.append(setWSSName(stmt));
+                    // case "TRANSPONDER_CARD" -> output.append(setTransponderCardName(stmt));
+                    // case "TRANSPONDER" -> output.append(setTransponderName(stmt));
+                    // case "WSS_PORT" -> output.append(setWSSPORTName());
+                    // case "FIBER" -> output.apppend(setFiberName());
+
+                }
+
+            case "SPEED":
+                /*
+                switch(stmt.deviceNode.object.value){
+
+                    case "TRANSPONDER" -> output.append(setTransponderSpeed());
+
+                }
+                */
+
+        }
+
+        return output;
+
+    }
+
+    private StringBuilder setROADMName(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        output.append("Changed name of ");
+        output.append(stmt.deviceName.name.value);
+
+        ROADM node = networkOrchestrator.getROADMByName(stmt.deviceName.name.value);
+        node.setName(stmt.valueNode.value.value);
+
+        output.append(" to ");
+        output.append(node.getName());
 
         return output;
 

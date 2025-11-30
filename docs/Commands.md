@@ -26,6 +26,10 @@ This is a collection of all the commands for the simulation, all of which can be
 
 ***This approach will assign a name value to the port that is equal to the index of the given device. If needed, the naming convention will be RecursiveDeviceParent/InitializedDevice (For Example: ROADM 1 Transponder_Card 3 Port 4 1/3/4)***
 
+### Field Value Assignments
+
+**ROADM Name Assignemnt** ROADM MODIFY NAME {ROADM CURRENT NAME} {NEW ROADM NAME}
+
 ### Help Commands
 
 **General Help:** Help
@@ -49,6 +53,8 @@ This is a collection of all the commands for the simulation, all of which can be
 **Need to Move Away From Proof of Concept For Command Generation, Move to Proof of Concept With Object Creation.**
 
 **Need to write fully help docs for language, then use docs to generate help commands**
+
+**Need to write proper error exception handling**
 
 ## Photonics Related Issues
 
