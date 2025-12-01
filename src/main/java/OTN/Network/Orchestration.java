@@ -88,4 +88,22 @@ public class Orchestration {
         return null;
 
     }
+
+    public WSS getWSSByName(String name){
+
+        for(int i = 0; i < WSSS.size(); i++){
+
+            String checkName = WSSS.get(i).getName();
+
+            if(name.equals(checkName)){
+
+                return WSSS.get(i);
+
+            }
+
+        }
+        
+        return null;
+
+    }
 }

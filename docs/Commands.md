@@ -28,7 +28,9 @@ This is a collection of all the commands for the simulation, all of which can be
 
 ### Field Value Assignments
 
-**ROADM Name Assignemnt** ROADM MODIFY NAME {ROADM CURRENT NAME} {NEW ROADM NAME}
+**ROADM Name Assignment** ROADM MODIFY NAME {ROADM CURRENT NAME} {NEW ROADM NAME}
+
+**WSS Name Assignment** WSS MODIFY NAME {WSS CURRENT NAME} {NEW WSS NAME}
 
 ### Help Commands
 

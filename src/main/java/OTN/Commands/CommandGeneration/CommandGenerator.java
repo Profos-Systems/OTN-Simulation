@@ -232,7 +232,7 @@ public class CommandGenerator {
                 switch(stmt.deviceNode.object.value){
                     
                     case "ROADM" -> output.append(setROADMName(stmt));
-                    // case "WSS" -> output.append(setWSSName(stmt));
+                    case "WSS" -> output.append(setWSSName(stmt));
                     // case "TRANSPONDER_CARD" -> output.append(setTransponderCardName(stmt));
                     // case "TRANSPONDER" -> output.append(setTransponderName(stmt));
                     // case "WSS_PORT" -> output.append(setWSSPORTName());
@@ -267,9 +267,27 @@ public class CommandGenerator {
 
         output.append(" to ");
         output.append(node.getName());
+        output.append("\n\n");
 
         return output;
 
+    }
+
+    private StringBuilder setWSSName(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        output.append("Change name of ");
+        output.append(stmt.deviceName.name.value);
+
+        WSS node = networkOrchestrator.getWSSByName(stmt.deviceName.name.value);
+        node.setName(stmt.valueNode.value.value);
+
+        output.append(" to ");
+        output.append(node.getName());
+        output.append("\n\n");
+
+        return output;
     }
 
 }

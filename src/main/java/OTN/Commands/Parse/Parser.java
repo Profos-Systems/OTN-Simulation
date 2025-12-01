@@ -214,7 +214,7 @@ public class Parser {
                     System.out.println("Found device name " + deviceName.name.value);
                 }
                 
-                if(peek() != null && peek().type == Token.types.OBJECT && !actionNode.actionToken.value.equals("CREATE")){
+                if(peek() != null && peek().type == Token.types.OBJECT && !actionNode.actionToken.value.equals("CREATE") && !actionNode.actionToken.value.equals("MODIFY")){
                     objectNode = parseObject();
                 }
                 

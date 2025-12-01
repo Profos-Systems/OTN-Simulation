@@ -61,6 +61,11 @@ public class WSS{
         }
     }
 
+    
+    public WSS(){
+        
+    }
+
     public WSS(String name){
 
         this.name = name;
@@ -91,6 +96,12 @@ public class WSS{
 
         sites = toSetSites;
 
+    }
+
+    public void setName(String name){
+
+        this.name = name;
+        
     }
     
     private int getPhysicalIndex(int portNumber) {
