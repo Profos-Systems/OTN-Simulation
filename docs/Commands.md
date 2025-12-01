@@ -58,6 +58,8 @@ This is a collection of all the commands for the simulation, all of which can be
 
 **Need to write proper error exception handling**
 
+**Refactor code to use continue statements, code should branch in the if or switch statements to create nodes based on current nodes that we have consumed, then continue, this will make the code more readable and take away some of the complex if conditions.**
+
 ## Photonics Related Issues
 
 **Create Conversion Between Binary Data And Photonic Envelope**
