@@ -49,8 +49,6 @@ public class CommandGenerator {
             
                 StatementNode stmt = StatementNodes.get(i);
 
-                System.out.println(stmt.type);
-
                 switch(stmt.type){
 
                     case StatementNode.types.HELP -> outputs.append(helpCommandGenerate());
@@ -109,10 +107,15 @@ public class CommandGenerator {
         output.append("-");
         output.append(second);
         output.append(" ");
-        output.append(" which is ");
+        output.append(stmt.deviceNode.object.value);
+        output.append("s\n\n");
+        output.append("Which is ");
         int total = second - first;
         output.append(total);
-        output.append("\n");
+        output.append(" ");
+        output.append(stmt.deviceNode.object.value);
+        output.append("s");
+        output.append("\n\n");
         for (int i = first; i <= second; i++){
 
             String name = Integer.toString(i);

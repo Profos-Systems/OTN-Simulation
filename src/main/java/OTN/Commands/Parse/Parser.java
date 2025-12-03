@@ -157,12 +157,6 @@ public class Parser {
 
         List<StatementNode> statementNodes = new ArrayList<>();
 
-        for(int i = 0; i < tokens.size(); i++){
-
-            System.out.println(peek(i).value);
-
-        }
-
         while(peek() != null){
 
             ObjectNode deviceNode = null;
@@ -175,8 +169,9 @@ public class Parser {
             RangeNode rangeNode = null;
 
             if(peek() != null && peek().type == Token.types.OBJECT){
+            
                 deviceNode = parseObject();
-                System.out.println("Found device " + deviceNode.object.value);
+            
             }
             
         
@@ -186,89 +181,71 @@ public class Parser {
                 
                 if(deviceNode != null){
                     statementNodes.add(new StatementNode(deviceNode, StatementNode.types.HELP));
+                    continue;
                 }
                 else{
                     statementNodes.add(new StatementNode(StatementNode.types.HELP));
+                    continue;
                 }
             }
 
-            else if(peek() != null && peek().type == Token.types.ACTION){
+            if(peek() != null && peek().type == Token.types.ACTION){
+
                 actionNode = parseAction();
-                System.out.println("Found action " + actionNode.actionToken.value);
+            
+            }
 
+            if(actionNode.actionToken.value.equals("MODIFY")){
+                
                 if(peek() != null && peek().type == Token.types.FIELD){
+                    
                     field = parseField();
-                    System.out.println("Field value found " + field.field.value);
-                    if(peek() != null && peek().type == Token.types.VALUE){
+                    
+                    if(peek() != null && peek().type == Token.types.VALUE && peek(1) != null && peek(1).type == Token.types.VALUE){
+                        
                         deviceName = parseObjectName();
-                        System.out.println("Found device name " + deviceName.name.value);
-                    }
-                    if(peek() != null && peek().type == Token.types.VALUE){
                         value = parseValue();
-                        System.out.println("Found value " + value.value.value);
-                    }
-                }
+                                                
+                        if(deviceNode != null){
 
-                if(peek() != null && peek().type == Token.types.VALUE){
-                    deviceName = parseObjectName();
-                    System.out.println("Found device name " + deviceName.name.value);
-                }
-                
-                if(peek() != null && peek().type == Token.types.OBJECT && !actionNode.actionToken.value.equals("CREATE") && !actionNode.actionToken.value.equals("MODIFY")){
-                    objectNode = parseObject();
-                }
-                
-                if(peek() != null && peek().type == Token.types.VALUE){
-                    objectName = parseObjectName();
-                    System.out.println("Object Name found " + objectName.name.value);
-                }
-                
-                if(peek() != null && peek().type == Token.types.VALUE){
-                    value = parseValue();
-                    System.out.println("Value found " + value.value.value);
-                }
-                if(peek() != null && peek().type == Token.types.INT){
-                    rangeNode = parseRange();
-                }
-                
-                if(deviceNode != null && deviceName != null && objectNode != null && objectName != null){
-                        if(value != null && field == null){
-                            statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, objectNode, objectName, value));
-                        } else {
-                            statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, objectNode, objectName));
+                            statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, field, value));
+                            continue;
+                        
                         }
                     }
-
-                else if(deviceNode != null && deviceName != null && field != null && value != null && actionNode.actionToken.value.equals("MODIFY")){
-                    
-                    statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, field, value));
-                    
                 }
+            }
 
-                else if(deviceNode != null && actionNode.actionToken.value.equals("CREATE") && rangeNode != null){
+            else if(actionNode.actionToken.value.equals("CREATE")){
 
-                    statementNodes.add(new StatementNode(deviceNode, actionNode, rangeNode));
+                if(peek() != null && peek().type == Token.types.INT){
 
-                }
+                    rangeNode = parseRange();
 
-                else if(deviceNode != null  && actionNode.actionToken.value.equals("CREATE")){
+                    if(deviceNode != null){
 
-                    statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName));
-
-                }
+                        statementNodes.add(new StatementNode(deviceNode, actionNode, rangeNode));
+                        continue;
                     
-                else {
-    
-                    if(peek() != null) {
-                        consume();
-                        System.out.println("No matching statements");
                     }
                 }
             }
             
+            if(peek() != null && peek().type == Token.types.VALUE){
+
+                deviceName = parseObjectName();
+
+                if(deviceName != null){
+                    
+                    statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName));
+                    continue;
+                
+                }
+            }
+
         }
 
-        return statementNodes;
+    return statementNodes;
 
     }
 
