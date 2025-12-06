@@ -214,10 +214,15 @@ public class Parser {
                         }
                     }
 
-                    else if(peek() != null && peek().type == Token.types.INT && peek(3) != null && peek(3).type == Token.types.VALUE){
+                    else if(peek() != null && peek().type == Token.types.INT){
 
                         rangeNode = parseRange();
-                        value = parseValue();
+
+                        if(peek() != null && peek().type == Token.types.VALUE){
+                         
+                            value = parseValue();
+
+                        }
 
                         if(deviceNode != null){
 
