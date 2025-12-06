@@ -18,6 +18,10 @@ public class Fiber {
     final double ATTENUATION = .2;
     String label;
 
+    public Fiber(){
+
+    }
+
     public Fiber(double len, String lb){
 
         length = len;
@@ -30,13 +34,19 @@ public class Fiber {
 
     }
 
+    public void setName(String name){
+
+        label = name;
+
+    }
+
     public void setLength(double len){
 
         length = len;
 
     }
 
-    public String getLabel(){
+    public String getName(){
         
         return label;
 

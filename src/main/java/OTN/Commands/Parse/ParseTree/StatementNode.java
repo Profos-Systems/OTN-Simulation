@@ -116,4 +116,16 @@ public class StatementNode {
 
     }
 
+    // Modify a range of devices
+    public StatementNode(ObjectNode device, ActionNode action, FieldNode field, RangeNode range, ValueNode value){
+
+        deviceNode = device;
+        actionNode = action;
+        fieldNode = field;
+        rangeNode = range;
+        valueNode = value;
+        type = types.RANGEMOD;
+
+    }
+
 }

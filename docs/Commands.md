@@ -32,6 +32,16 @@ This is a collection of all the commands for the simulation, all of which can be
 
 **WSS Name Assignment** WSS MODIFY NAME {WSS CURRENT NAME} {NEW WSS NAME}
 
+**Transponder Card Name Assignment** TRANSPONDER_CARD MODIFY NAME {TRANSPONDER_CARD CURRENT NAME} {NEW TRANSPONDER_CARD NAME}
+
+**Transponder Name Assignment** TRANSPONDER MODIFY NAME {TRANSPONDER CURRENT NAME} {NEW TRANSPONDER NAME}
+
+**WSS Port Name Assignment** WSS_PORT MODIFY NAME {WSS_PORT CURRENT NAME} {NEW WSS_PORT NAME}
+
+**Fiber Name Assignment** FIBER MODIFY NAME {FIBER CURRENT NAME} {NEW FIBER NAME}
+
+**Range Field Assignment** WSS MODIFY NAME 1-10 WSS_Things (Changes the name of WSS node 1-10 to WSS_Things REALLY NOT RECOMMENDED)
+
 ### Help Commands
 
 **General Help:** Help
@@ -46,13 +56,7 @@ This is a collection of all the commands for the simulation, all of which can be
 
 **Need to Create Help Handler For All Objects Except ROADM**
 
-### Field Value Assignments
-
-**Need to Create Field Assignment Handlers For All Objects and Fields**
-
 ## Notes
-
-**Need to Move Away From Proof of Concept For Command Generation, Move to Proof of Concept With Object Creation.**
 
 **Need to write fully help docs for language, then use docs to generate help commands**
 
@@ -67,7 +71,7 @@ This is a collection of all the commands for the simulation, all of which can be
 
 **Track Fully Photonic Envelope Through The Whole Simulation**
     
-* Possibly rewrite portions of the WSS to operate on the Photonic Envelope
+**Possibly rewrite portions of the WSS to operate on the Photonic Envelope**
 
 ## Current Potential Issues
 

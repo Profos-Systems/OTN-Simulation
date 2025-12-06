@@ -28,6 +28,11 @@ public class Transponder {
         txSignalStrength_DBM = this.txSignalStrength_DBM;
     }
 
+    public Transponder(){
+
+
+    }
+
     public Transponder(String name){
 
         this.name = name;
@@ -92,6 +97,12 @@ public class Transponder {
     public void setDuplex(boolean duplex){
 
         this.duplex = duplex;
+
+    }
+
+    public void setName(String name){
+
+        this.name = name;
 
     }
 }

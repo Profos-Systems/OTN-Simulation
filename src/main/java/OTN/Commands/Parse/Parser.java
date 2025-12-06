@@ -162,8 +162,8 @@ public class Parser {
             ObjectNode deviceNode = null;
             ActionNode actionNode = null;
             ObjectNameNode deviceName = null;
-            ObjectNode objectNode = null;
-            ObjectNameNode objectName = null;
+            // ObjectNode objectNode = null;
+            // ObjectNameNode objectName = null;
             ValueNode value = null;
             FieldNode field = null;
             RangeNode rangeNode = null;
@@ -195,7 +195,7 @@ public class Parser {
             
             }
 
-            if(actionNode.actionToken.value.equals("MODIFY")){
+            if(actionNode != null && actionNode.actionToken.value.equals("MODIFY")){
                 
                 if(peek() != null && peek().type == Token.types.FIELD){
                     
@@ -213,10 +213,24 @@ public class Parser {
                         
                         }
                     }
+
+                    else if(peek() != null && peek().type == Token.types.INT && peek(3) != null && peek(3).type == Token.types.VALUE){
+
+                        rangeNode = parseRange();
+                        value = parseValue();
+
+                        if(deviceNode != null){
+
+                            statementNodes.add(new StatementNode(deviceNode, actionNode, field, rangeNode, value));
+                            continue;
+
+                        }
+
+                    }
                 }
             }
 
-            else if(actionNode.actionToken.value.equals("CREATE")){
+            else if(actionNode != null && actionNode.actionToken.value.equals("CREATE")){
 
                 if(peek() != null && peek().type == Token.types.INT){
 
@@ -229,18 +243,28 @@ public class Parser {
                     
                     }
                 }
-            }
             
-            if(peek() != null && peek().type == Token.types.VALUE){
+                if(peek() != null && peek().type == Token.types.VALUE){
 
-                deviceName = parseObjectName();
+                    deviceName = parseObjectName();
 
-                if(deviceName != null){
+                    if(deviceName != null){
+                        
+                        statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName));
+                        continue;
                     
-                    statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName));
-                    continue;
-                
+                    }
                 }
+            
+            }
+
+        else{
+
+                System.out.println("Unknown Token");
+                System.out.println(peek().value);
+                consume();
+                continue;
+
             }
 
         }

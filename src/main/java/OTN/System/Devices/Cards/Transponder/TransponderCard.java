@@ -32,6 +32,10 @@ public class TransponderCard {
         }
     }
 
+    public TransponderCard(){
+
+    }
+
     public TransponderCard(String name){
 
         this.name = name;
@@ -49,6 +53,13 @@ public class TransponderCard {
             ports[i] = new Transponder(1000, true, 2);
 
         }
+    }
+
+    public void setName(String name){
+
+        this.name = name;
+
+
     }
 
     public Transponder getPort(int index){

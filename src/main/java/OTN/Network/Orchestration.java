@@ -106,4 +106,77 @@ public class Orchestration {
         return null;
 
     }
+
+    public TransponderCard getTransponderCardByName(String name){
+
+        for(int i = 0; i < Transponder_Cards.size(); i++){
+
+
+            String checkName = Transponder_Cards.get(i).getName();
+
+            if(name.equals(checkName)){
+
+                return Transponder_Cards.get(i);
+
+            }
+
+        }
+
+        return null;
+    }
+
+    public Transponder getTransponderByName(String name){
+
+        for(int i = 0; i < Transponders.size(); i++){
+
+
+            String checkName = Transponders.get(i).getName();
+
+            if(name.equals(checkName)){
+
+                return Transponders.get(i);
+
+            }
+
+        }
+
+        return null;
+    }
+
+    public WSSPort getWSSPortByName(String name){
+
+        for(int i = 0; i < WSSPorts.size(); i++){
+
+
+            String checkName = WSSPorts.get(i).getName();
+
+            if(name.equals(checkName)){
+
+                return WSSPorts.get(i);
+
+            }
+
+        }
+
+        return null;
+    }
+
+    public Fiber getFiberByName(String name){
+
+        for(int i = 0; i < Fibers.size(); i++){
+
+
+            String checkName = Fibers.get(i).getName();
+
+            if(name.equals(checkName)){
+
+                return Fibers.get(i);
+
+            }
+
+        }
+
+        return null;
+    }
+
 }

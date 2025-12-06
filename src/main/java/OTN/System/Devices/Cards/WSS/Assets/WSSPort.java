@@ -17,6 +17,10 @@ public class WSSPort {
     String portSite;
     Transponder mappedTransponder;
 
+    public WSSPort(){
+
+    }
+
     public WSSPort(String site, Transponder transponderToMap){
 
         portSite = site;
@@ -54,4 +58,11 @@ public class WSSPort {
         return mappedTransponder;
 
     }
+
+    public void setName(String name){
+
+        portSite = name;
+
+    }
+
 }

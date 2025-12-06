@@ -55,6 +55,7 @@ public class CommandGenerator {
                     case StatementNode.types.RANGEINIT -> outputs.append(deviceRangeGenerate(stmt));
                     case StatementNode.types.INIT -> outputs.append(initCommandGenerate(stmt));
                     case StatementNode.types.SET_VALUES -> outputs.append(setValues(stmt));
+                    case StatementNode.types.RANGEMOD -> outputs.append(setRangeValues(stmt));
                     default -> outputs.append("Unable to generate commands!");
                 }
             
@@ -216,7 +217,7 @@ public class CommandGenerator {
         Fiber fiber = new Fiber(stmt.deviceName.name.value);
 
         output.append("Created Fiber: ");
-        output.append(fiber.getLabel());
+        output.append(fiber.getName());
         output.append("\n\n");
 
         networkOrchestrator.addNode(fiber);
@@ -229,68 +230,180 @@ public class CommandGenerator {
 
         StringBuilder output = new StringBuilder();
 
-        switch(stmt.fieldNode.field.value){
-
-            case "NAME":
-                switch(stmt.deviceNode.object.value){
+        switch(stmt.deviceNode.object.value){
                     
-                    case "ROADM" -> output.append(setROADMName(stmt));
-                    case "WSS" -> output.append(setWSSName(stmt));
-                    // case "TRANSPONDER_CARD" -> output.append(setTransponderCardName(stmt));
-                    // case "TRANSPONDER" -> output.append(setTransponderName(stmt));
-                    // case "WSS_PORT" -> output.append(setWSSPORTName());
-                    // case "FIBER" -> output.apppend(setFiberName());
-
-                }
-
-            case "SPEED":
-                /*
-                switch(stmt.deviceNode.object.value){
-
-                    case "TRANSPONDER" -> output.append(setTransponderSpeed());
-
-                }
-                */
-
+            case "ROADM" -> output.append(setROADMAttribute(stmt));
+            case "WSS" -> output.append(setWSSAttribute(stmt));
+            case "TRANSPONDER_CARD" -> output.append(setTransponderCardAttribute(stmt));
+            case "TRANSPONDER" -> output.append(setTransponderAttribute(stmt));
+            case "WSS_PORT" -> output.append(setWSSPortAttribute(stmt));
+            case "FIBER" -> output.append(setFiberAttribute(stmt));
         }
 
         return output;
 
     }
 
-    private StringBuilder setROADMName(StatementNode stmt){
+    private StringBuilder setROADMAttribute(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
 
-        output.append("Changed name of ");
-        output.append(stmt.deviceName.name.value);
+        switch(stmt.fieldNode.field.value){
 
-        ROADM node = networkOrchestrator.getROADMByName(stmt.deviceName.name.value);
-        node.setName(stmt.valueNode.value.value);
+            case("NAME"):
 
-        output.append(" to ");
-        output.append(node.getName());
-        output.append("\n\n");
+                output.append("Changed name of ");
+                output.append(stmt.deviceName.name.value);
 
+                ROADM node = networkOrchestrator.getROADMByName(stmt.deviceName.name.value);
+                node.setName(stmt.valueNode.value.value);
+
+                output.append(" to ");
+                output.append(node.getName());
+                output.append("\n\n");
+        
+        }
+        
         return output;
 
     }
 
-    private StringBuilder setWSSName(StatementNode stmt){
+    private StringBuilder setWSSAttribute(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
 
-        output.append("Change name of ");
-        output.append(stmt.deviceName.name.value);
+        switch(stmt.fieldNode.field.value){
 
-        WSS node = networkOrchestrator.getWSSByName(stmt.deviceName.name.value);
-        node.setName(stmt.valueNode.value.value);
+            case("NAME"):
+                output.append("Changed name of ");
+                output.append(stmt.deviceName.name.value);
 
-        output.append(" to ");
-        output.append(node.getName());
-        output.append("\n\n");
+                WSS node = networkOrchestrator.getWSSByName(stmt.deviceName.name.value);
+                node.setName(stmt.valueNode.value.value);
+
+                output.append(" to ");
+                output.append(node.getName());
+                output.append("\n\n");
+        }
 
         return output;
     }
 
+    private StringBuilder setTransponderCardAttribute(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        switch(stmt.fieldNode.field.value){
+
+            case("NAME"):
+                output.append("Changed name of ");
+                output.append(stmt.deviceName.name.value);
+
+                TransponderCard node = networkOrchestrator.getTransponderCardByName(stmt.deviceName.name.value);
+                node.setName(stmt.valueNode.value.value);
+
+                output.append(" to ");
+                output.append(node.getName());
+                output.append("\n\n");
+        }
+
+        return output;
+    }
+        
+    private StringBuilder setTransponderAttribute(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        switch(stmt.fieldNode.field.value){
+
+            case("NAME"):
+                output.append("Changed name of ");
+                output.append(stmt.deviceName.name.value);
+
+                Transponder node = networkOrchestrator.getTransponderByName(stmt.deviceName.name.value);
+                node.setName(stmt.valueNode.value.value);
+
+                output.append(" to ");
+                output.append(node.getName());
+                output.append("\n\n");
+        }
+
+        return output;
+    }
+    
+    private StringBuilder setWSSPortAttribute(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        switch(stmt.fieldNode.field.value){
+
+            case("NAME"):
+                output.append("Changed name of ");
+                output.append(stmt.deviceName.name.value);
+
+                WSSPort node = networkOrchestrator.getWSSPortByName(stmt.deviceName.name.value);
+                node.setName(stmt.valueNode.value.value);
+
+                output.append(" to ");
+                output.append(node.getName());
+                output.append("\n\n");
+        }
+
+        return output;
+    }
+    
+    private StringBuilder setFiberAttribute(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        switch(stmt.fieldNode.field.value){
+
+            case("NAME"):
+                output.append("Changed name of ");
+                output.append(stmt.deviceName.name.value);
+
+                Fiber node = networkOrchestrator.getFiberByName(stmt.deviceName.name.value);
+                node.setName(stmt.valueNode.value.value);
+
+                output.append(" to ");
+                output.append(node.getName());
+                output.append("\n\n");
+        }
+
+        return output;
+    }
+
+        private StringBuilder setRangeValues(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+        output.append("Changing values on a range of ");
+        int first = stmt.rangeNode.firstInt.intValue;
+        int second = stmt.rangeNode.secondInt.intValue;
+        output.append(first);
+        output.append("-");
+        output.append(second);
+        output.append(" ");
+        output.append(stmt.deviceNode.object.value);
+        output.append("s\n\n");
+        output.append("Which is ");
+        int total = second - first;
+        output.append(total);
+        output.append(" ");
+        output.append(stmt.deviceNode.object.value);
+        output.append("s");
+        output.append("\n\n");
+        for (int i = first; i <= second; i++){
+
+            String name = Integer.toString(i);
+            Token nameToken = new Token(Token.types.VALUE, name);
+            stmt.deviceName = new ObjectNameNode(nameToken);
+            StatementNode rangeStmt = new StatementNode(stmt.deviceNode, stmt.actionNode, stmt.deviceName, stmt.fieldNode, stmt.valueNode);
+            output.append(setValues(rangeStmt));
+
+        }
+
+        return output;
+
+    }
+    
 }
