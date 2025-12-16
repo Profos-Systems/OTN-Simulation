@@ -251,17 +251,17 @@ public class CommandGenerator {
 
         switch(stmt.fieldNode.field.value){
 
-            case("NAME"):
-
+            case("NAME") -> {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
-
+                
                 
                 node.setName(stmt.valueNode.value.value);
 
                 output.append(" to ");
                 output.append(node.getName());
                 output.append("\n\n");
+            }
         
         }
         
@@ -276,7 +276,7 @@ public class CommandGenerator {
 
         switch(stmt.fieldNode.field.value){
 
-            case("NAME"):
+            case("NAME") -> {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
 
@@ -285,6 +285,7 @@ public class CommandGenerator {
                 output.append(" to ");
                 output.append(node.getName());
                 output.append("\n\n");
+            }
         }
 
         return output;
@@ -297,16 +298,17 @@ public class CommandGenerator {
 
         switch(stmt.fieldNode.field.value){
 
-            case("NAME"):
+            case("NAME") -> {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
-
-
+                
+                
                 node.setName(stmt.valueNode.value.value);
 
                 output.append(" to ");
                 output.append(node.getName());
                 output.append("\n\n");
+            }
         }
 
         return output;
@@ -319,20 +321,19 @@ public class CommandGenerator {
 
         switch(stmt.fieldNode.field.value){
 
-            case("NAME"):
+            case("NAME") -> {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
-
-
+                
+                
                 node.setName(stmt.valueNode.value.value);
 
                 output.append(" to ");
                 output.append(node.getName());
                 output.append("\n\n");
+            }
 
-                break;
-
-            case("SPEED"):
+            case("SPEED") -> {
                 output.append("Changed speed of ");
                 output.append(stmt.deviceName.name.value);
 
@@ -341,8 +342,7 @@ public class CommandGenerator {
                 output.append(" to ");
                 output.append(node.getSpeed());
                 output.append("\n\n");
-
-                break;
+            }
 
         }
 
@@ -355,7 +355,7 @@ public class CommandGenerator {
         WSSPort node = networkOrchestrator.getWSSPortByName(stmt.deviceName.name.value);
         switch(stmt.fieldNode.field.value){
 
-            case("NAME"):
+            case("NAME") -> {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
 
@@ -364,6 +364,7 @@ public class CommandGenerator {
                 output.append(" to ");
                 output.append(node.getName());
                 output.append("\n\n");
+            }
         }
 
         return output;
@@ -376,7 +377,7 @@ public class CommandGenerator {
 
         switch(stmt.fieldNode.field.value){
 
-            case("NAME"):
+            case("NAME") -> {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
 
@@ -385,6 +386,7 @@ public class CommandGenerator {
                 output.append(" to ");
                 output.append(node.getName());
                 output.append("\n\n");
+            }
         }
 
         return output;
