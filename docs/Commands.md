@@ -42,6 +42,8 @@ This is a collection of all the commands for the simulation, all of which can be
 
 **Range Field Assignment** WSS MODIFY NAME 1-10 WSS_Things (Changes the name of WSS node 1-10 to WSS_Things REALLY NOT RECOMMENDED)
 
+**Transponder Speed Assignent** TRANSPONDER MODIFY SPEED TRANSPONDER1 1000.254
+
 ### Help Commands
 
 **General Help:** Help

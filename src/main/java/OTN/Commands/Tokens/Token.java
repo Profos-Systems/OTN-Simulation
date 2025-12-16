@@ -26,7 +26,7 @@ public class Token{
 
     public types type;
     public String value;
-    public int intValue;
+    public double intValue;
 
     public Token(types type, String value){
 
@@ -34,10 +34,11 @@ public class Token{
         this.value = value;
     }
 
-    public Token(int value){
+    public Token(double value){
 
         type = types.INT;
         intValue = value;
 
     }
+
 }

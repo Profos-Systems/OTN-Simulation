@@ -12,10 +12,17 @@ You should have received a copy of the GNU General Public License along with OTN
 
 package OTN.Commands.Parse;
 
-import OTN.Commands.Tokens.Token;
-import OTN.Commands.Parse.ParseTree.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import OTN.Commands.Parse.ParseTree.ActionNode;
+import OTN.Commands.Parse.ParseTree.FieldNode;
+import OTN.Commands.Parse.ParseTree.ObjectNameNode;
+import OTN.Commands.Parse.ParseTree.ObjectNode;
+import OTN.Commands.Parse.ParseTree.RangeNode;
+import OTN.Commands.Parse.ParseTree.StatementNode;
+import OTN.Commands.Parse.ParseTree.ValueNode;
+import OTN.Commands.Tokens.Token;
 
 public class Parser {
 
@@ -81,7 +88,7 @@ public class Parser {
 
     public ValueNode parseValue(){
 
-        if(peek() != null && peek().type == Token.types.VALUE){
+        if(peek() != null && (peek().type == Token.types.VALUE || peek().type == Token.types.INT)){
 
             ValueNode valueNode = new ValueNode(consume());
 
@@ -170,6 +177,7 @@ public class Parser {
 
             if(peek() != null && peek().type == Token.types.OBJECT){
             
+                System.out.println("Object " + peek().value);
                 deviceNode = parseObject();
             
             }
@@ -191,6 +199,7 @@ public class Parser {
 
             if(peek() != null && peek().type == Token.types.ACTION){
 
+                System.out.println("Action " + peek().value);
                 actionNode = parseAction();
             
             }
@@ -199,10 +208,15 @@ public class Parser {
                 
                 if(peek() != null && peek().type == Token.types.FIELD){
                     
+                    System.out.println("Field " + peek().value);
                     field = parseField();
                     
-                    if(peek() != null && peek().type == Token.types.VALUE && peek(1) != null && peek(1).type == Token.types.VALUE){
+                    System.out.println("Next Token Type " + peek(1).type);
+
+                    if((peek() != null && peek().type == Token.types.VALUE && peek(1) != null) && (peek(1).type == Token.types.VALUE || (peek(1).type == Token.types.INT && peek(2) == null || peek(2).type != Token.types.RANGECOMA || peek(2).type != Token.types.RANGEHYPHEN))) {
                         
+                        System.out.println("Name " + peek().value);
+                        System.out.println("Value " + peek(1).value);
                         deviceName = parseObjectName();
                         value = parseValue();
                                                 
@@ -265,7 +279,7 @@ public class Parser {
 
         else{
 
-                System.out.println("Unknown Token");
+                System.out.print("Unknown Token: ");
                 System.out.println(peek().value);
                 consume();
                 continue;

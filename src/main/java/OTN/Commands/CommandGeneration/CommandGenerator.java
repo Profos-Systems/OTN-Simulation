@@ -12,18 +12,18 @@ You should have received a copy of the GNU General Public License along with OTN
 
 package OTN.Commands.CommandGeneration;
 
+import java.util.List;
+
+import OTN.Commands.Parse.ParseTree.ObjectNameNode;
 import OTN.Commands.Parse.ParseTree.StatementNode;
-import OTN.System.Devices.Nodes.ROADM.ROADM;
+import OTN.Commands.Tokens.Token;
 import OTN.Network.Orchestration;
-import OTN.System.Devices.Cards.WSS.WSS;
+import OTN.System.Devices.Cards.Transponder.Assets.Transponder;
 import OTN.System.Devices.Cards.Transponder.TransponderCard;
 import OTN.System.Devices.Cards.WSS.Assets.WSSPort;
-import OTN.System.Devices.Cards.Transponder.Assets.Transponder;
+import OTN.System.Devices.Cards.WSS.WSS;
+import OTN.System.Devices.Nodes.ROADM.ROADM;
 import OTN.System.Objects.Light.Fiber;
-import OTN.Commands.Tokens.Token;
-import OTN.Commands.Parse.ParseTree.*;
-
-import java.util.List;
 
 
 public class CommandGenerator {
@@ -102,8 +102,8 @@ public class CommandGenerator {
 
         StringBuilder output = new StringBuilder();
         output.append("Generating a range of ");
-        int first = stmt.rangeNode.firstInt.intValue;
-        int second = stmt.rangeNode.secondInt.intValue;
+        int first = (int)stmt.rangeNode.firstInt.intValue;
+        int second = (int)stmt.rangeNode.secondInt.intValue;
         output.append(first);
         output.append("-");
         output.append(second);
@@ -247,6 +247,7 @@ public class CommandGenerator {
     private StringBuilder setROADMAttribute(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
+        ROADM node = networkOrchestrator.getROADMByName(stmt.deviceName.name.value);
 
         switch(stmt.fieldNode.field.value){
 
@@ -255,7 +256,7 @@ public class CommandGenerator {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
 
-                ROADM node = networkOrchestrator.getROADMByName(stmt.deviceName.name.value);
+                
                 node.setName(stmt.valueNode.value.value);
 
                 output.append(" to ");
@@ -271,6 +272,7 @@ public class CommandGenerator {
     private StringBuilder setWSSAttribute(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
+        WSS node = networkOrchestrator.getWSSByName(stmt.deviceName.name.value);
 
         switch(stmt.fieldNode.field.value){
 
@@ -278,7 +280,6 @@ public class CommandGenerator {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
 
-                WSS node = networkOrchestrator.getWSSByName(stmt.deviceName.name.value);
                 node.setName(stmt.valueNode.value.value);
 
                 output.append(" to ");
@@ -292,6 +293,7 @@ public class CommandGenerator {
     private StringBuilder setTransponderCardAttribute(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
+        TransponderCard node = networkOrchestrator.getTransponderCardByName(stmt.deviceName.name.value);
 
         switch(stmt.fieldNode.field.value){
 
@@ -299,7 +301,7 @@ public class CommandGenerator {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
 
-                TransponderCard node = networkOrchestrator.getTransponderCardByName(stmt.deviceName.name.value);
+
                 node.setName(stmt.valueNode.value.value);
 
                 output.append(" to ");
@@ -313,6 +315,7 @@ public class CommandGenerator {
     private StringBuilder setTransponderAttribute(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
+        Transponder node = networkOrchestrator.getTransponderByName(stmt.deviceName.name.value);
 
         switch(stmt.fieldNode.field.value){
 
@@ -320,12 +323,27 @@ public class CommandGenerator {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
 
-                Transponder node = networkOrchestrator.getTransponderByName(stmt.deviceName.name.value);
+
                 node.setName(stmt.valueNode.value.value);
 
                 output.append(" to ");
                 output.append(node.getName());
                 output.append("\n\n");
+
+                break;
+
+            case("SPEED"):
+                output.append("Changed speed of ");
+                output.append(stmt.deviceName.name.value);
+
+                node.setSpeed(stmt.valueNode.value.intValue);
+
+                output.append(" to ");
+                output.append(node.getSpeed());
+                output.append("\n\n");
+
+                break;
+
         }
 
         return output;
@@ -334,14 +352,13 @@ public class CommandGenerator {
     private StringBuilder setWSSPortAttribute(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
-
+        WSSPort node = networkOrchestrator.getWSSPortByName(stmt.deviceName.name.value);
         switch(stmt.fieldNode.field.value){
 
             case("NAME"):
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
 
-                WSSPort node = networkOrchestrator.getWSSPortByName(stmt.deviceName.name.value);
                 node.setName(stmt.valueNode.value.value);
 
                 output.append(" to ");
@@ -355,6 +372,7 @@ public class CommandGenerator {
     private StringBuilder setFiberAttribute(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
+        Fiber node = networkOrchestrator.getFiberByName(stmt.deviceName.name.value);
 
         switch(stmt.fieldNode.field.value){
 
@@ -362,7 +380,6 @@ public class CommandGenerator {
                 output.append("Changed name of ");
                 output.append(stmt.deviceName.name.value);
 
-                Fiber node = networkOrchestrator.getFiberByName(stmt.deviceName.name.value);
                 node.setName(stmt.valueNode.value.value);
 
                 output.append(" to ");
@@ -377,8 +394,8 @@ public class CommandGenerator {
 
         StringBuilder output = new StringBuilder();
         output.append("Changing values on a range of ");
-        int first = stmt.rangeNode.firstInt.intValue;
-        int second = stmt.rangeNode.secondInt.intValue;
+        int first = (int)stmt.rangeNode.firstInt.intValue;
+        int second = (int)stmt.rangeNode.secondInt.intValue;
         output.append(first);
         output.append("-");
         output.append(second);

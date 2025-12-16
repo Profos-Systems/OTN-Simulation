@@ -47,7 +47,7 @@ $$
         [\text{DUPLEX}] \\ 
         [\text{TX\_POWER}] \\
         [\text{PORT\_COUNT}] \\ 
-        [\text{LABEL}] \\
+        [\text{NAME}] \\
         [\text{PORT\_INDEX}] \\
         [\text{LENGTH}] \\
         [\text{A\_SIDE}] \\
