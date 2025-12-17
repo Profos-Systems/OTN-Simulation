@@ -392,7 +392,7 @@ public class CommandGenerator {
         return output;
     }
 
-        private StringBuilder setRangeValues(StatementNode stmt){
+    private StringBuilder setRangeValues(StatementNode stmt){
 
         StringBuilder output = new StringBuilder();
         output.append("Changing values on a range of ");

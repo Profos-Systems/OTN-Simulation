@@ -232,7 +232,7 @@ public class Parser {
 
                         rangeNode = parseRange();
 
-                        if(peek() != null && peek().type == Token.types.VALUE){
+                        if(peek() != null && (peek().type == Token.types.VALUE ||(peek().type == Token.types.INT && (peek().type != Token.types.RANGECOMA || peek().type != Token.types.RANGEHYPHEN)))){
                          
                             value = parseValue();
 
