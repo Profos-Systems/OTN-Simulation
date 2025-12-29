@@ -51,10 +51,21 @@ public class Transponder {
 
     }
 
-    public boolean getDuplex(){
+    public String getDuplex(){
 
-        return duplex;
+        if (duplex){
 
+            return "FULL";
+
+        }else if(!duplex){
+        
+            return "HALF";
+        
+        }else{
+        
+            return "Error";
+        
+        }
     }
 
     public double getRXSignalStrength(){

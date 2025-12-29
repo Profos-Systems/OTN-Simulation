@@ -344,6 +344,24 @@ public class CommandGenerator {
                 output.append("\n\n");
             }
 
+            case("DUPLEX") ->{
+                output.append("Changed Duplex of ");
+                output.append(stmt.deviceName.name.value);
+
+                if (stmt.valueNode.value.value.equals("HALF")){
+                
+                    node.setDuplex(false);
+
+                }else if (stmt.valueNode.value.value.equals("FULL")){
+
+                    node.setDuplex(true);
+
+                }
+                output.append(" to ");
+                output.append(node.getDuplex());
+                output.append("\n\n");
+            }
+
         }
 
         return output;
