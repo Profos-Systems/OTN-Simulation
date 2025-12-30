@@ -362,6 +362,32 @@ public class CommandGenerator {
                 output.append("\n\n");
             }
 
+            case ("WAVELENGTH") -> {
+
+                output.append("Changed Wavelength of ");
+                output.append(stmt.deviceName.name.value);
+                
+                node.setWavelength(stmt.valueNode.value.intValue);
+
+                output.append(" to ");
+                output.append(node.getWaveProperties());
+                output.append("\n\n");
+
+            }
+
+            case ("FREQUENCY") -> {
+
+                output.append("Changed Frequency of ");
+                output.append(stmt.deviceName.name.value);
+
+                node.setFrequency(stmt.valueNode.value.intValue);
+
+                output.append(" to ");
+                output.append(node.getWaveProperties());
+                output.append("\n\n");
+
+            }
+
         }
 
         return output;

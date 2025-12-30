@@ -46,6 +46,12 @@ This is a collection of all the commands for the simulation, all of which can be
 
 **Transponder Duplex Assignment** TRANSPONDER MODIFY DUPLEX TRANSPONDER1 FULL
 
+**Transponder Wavelength Assignment** TRANSPONDER MODIFY WAVELENGTH TRANSPONDER1 1550
+
+**Transponder Frequency Assignment** TRANSPONDER MODIFY FREQUENCY TRANSPONDER1 193.41
+
+***Transponder Wavelength will be calculated based on frequency and vice versa, running both commands on the same transponder will just cause your data to be overwritten. This setting is meant for the client facing transponders, as DWDM transponders will have multiple wavelengths.***
+
 ### Help Commands
 
 **General Help:** Help

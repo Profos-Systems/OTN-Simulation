@@ -20,6 +20,9 @@ public class Transponder {
     double txSignalStrength_DBM;
     public final double RXSENSITIVITY_DBM = -40;
     String name;
+    double wavelength;
+    final int SPEED_LIGHT_MS =  299792458;
+    double frequency;
 
     public Transponder(double speed, boolean duplex, double txSignalStrength_DBM){
 
@@ -114,6 +117,28 @@ public class Transponder {
     public void setName(String name){
 
         this.name = name;
+
+    }
+
+    public void setWavelength(double wavelength){
+
+        this.wavelength = wavelength / 1e9;
+        frequency = SPEED_LIGHT_MS / this.wavelength;
+
+    }
+
+    public void setFrequency(double frequency){
+
+        this.frequency = frequency * 1e12;
+        wavelength = SPEED_LIGHT_MS / this.frequency;
+
+    }
+
+    public String getWaveProperties(){
+
+        double displayWavelength = wavelength * 1e9;
+        double displayFrequency = frequency / 1e12;
+        return String.format("Wavelength %.2fnm : Frequency %.2fTHz", displayWavelength, displayFrequency);
 
     }
 }
