@@ -27,11 +27,18 @@ public class Token{
     public types type;
     public String value;
     public double intValue;
+    public String[] arrayValue;
 
     public Token(types type, String value){
 
         this.type = type;
         this.value = value;
+    }
+
+    public Token(types type, String[] arrayValue){
+
+        this.type = type;
+        this.arrayValue = arrayValue;
     }
 
     public Token(double value){

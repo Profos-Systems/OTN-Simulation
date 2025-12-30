@@ -72,7 +72,7 @@ public class WSS{
         
     }
 
-    public void setPortNum(int portNum){
+    public void setPortCount(int portNum){
 
         if (portNum < 1){
 
@@ -92,6 +92,11 @@ public class WSS{
         }
     }
 
+    public int getPortCount(){
+
+        return portCount;
+    }
+
     public void setPortNames(String [] toSetSites){
 
         sites = toSetSites;
@@ -109,18 +114,29 @@ public class WSS{
     }
     
     // Display the ports and sites they are assigned to
-    public void getSiteLayout(){
-        System.out.println("This WSS has " + portCount + " port(s).");
-        System.out.println("The physical center axis aligns with Port " + centerPortNumber + " (Physical Index 0).");
-        System.out.println("----------------------------------------");
+    public StringBuilder getSiteLayout(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("This WSS has ");
+        sb.append(portCount);
+        sb.append(" port(s).");
+        sb.append("The physical center axis aligns with Port ");
+        sb.append(centerPortNumber);
+        sb.append(" (Physical Index 0).");
+        sb.append("----------------------------------------");
         
         for(int i = 0; i < sites.length; i++){
             int portNumber = i + 1;
             int physicalIndex = getPhysicalIndex(portNumber);
-            System.out.printf("Port %d (Phys Index: %d) assigned to: %s%n", 
-                               portNumber, physicalIndex, sites[i]);
+            sb.append("Port "); 
+            sb.append(portNumber);
+            sb.append("Phys Index: ");
+            sb.append(physicalIndex);
+            sb.append("assigned to: ");
+            sb.append(sites[i]); 
         }
-        System.out.println("----------------------------------------");
+        sb.append("----------------------------------------");
+
+        return sb;
     }
     
    // Calculates the spatial position (X-coordinate in mm) where a wavelength lands on the LCoS.

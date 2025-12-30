@@ -15,6 +15,7 @@ package OTN.Commands.CommandGeneration;
 import java.util.List;
 
 import OTN.Commands.Parse.ParseTree.ObjectNameNode;
+import OTN.Commands.Parse.ParseTree.RangeNode;
 import OTN.Commands.Parse.ParseTree.StatementNode;
 import OTN.Commands.Tokens.Token;
 import OTN.Network.Orchestration;
@@ -286,6 +287,29 @@ public class CommandGenerator {
                 output.append(node.getName());
                 output.append("\n\n");
             }
+            case("PORT_COUNT") -> {
+
+                output.append("Changed port count of ");
+                output.append(stmt.deviceName.name.value);
+
+                node.setPortCount((int)stmt.valueNode.value.intValue);
+
+                output.append(" to ");
+                output.append(node.getPortCount());
+                output.append("\n\n");
+
+            }
+            case("SITE") -> {
+
+                output.append("Changed sites on ");
+                output.append(stmt.deviceName.name.value);
+                
+                node.setPortNames(stmt.valueNode.value.arrayValue);
+
+                output.append(" to ");
+                output.append(node.getSiteLayout());
+
+            }
         }
 
         return output;
@@ -388,6 +412,19 @@ public class CommandGenerator {
 
             }
 
+            case("TX_POWER") ->{
+
+                output.append("Changed TX Power of ");
+                output.append(stmt.deviceName.name.value);
+
+                node.setTXSignalStrength(stmt.valueNode.value.intValue);
+
+                output.append(" to ");
+                output.append(node.getTXSignalStrength());
+                output.append("\n\n");
+
+            }
+
         }
 
         return output;
@@ -437,35 +474,62 @@ public class CommandGenerator {
     }
 
     private StringBuilder setRangeValues(StatementNode stmt){
+        if (stmt.rangeNode.type == RangeNode.types.HYPHEN){
+            StringBuilder output = new StringBuilder();
+            output.append("Changing values on a range of ");
+            int first = (int)stmt.rangeNode.firstInt.intValue;
+            int second = (int)stmt.rangeNode.secondInt.intValue;
+            output.append(first);
+            output.append("-");
+            output.append(second);
+            output.append(" ");
+            output.append(stmt.deviceNode.object.value);
+            output.append("s\n\n");
+            output.append("Which is ");
+            int total = second - first;
+            output.append(total);
+            output.append(" ");
+            output.append(stmt.deviceNode.object.value);
+            output.append("s");
+            output.append("\n\n");
+            for (int i = first; i <= second; i++){
 
-        StringBuilder output = new StringBuilder();
-        output.append("Changing values on a range of ");
-        int first = (int)stmt.rangeNode.firstInt.intValue;
-        int second = (int)stmt.rangeNode.secondInt.intValue;
-        output.append(first);
-        output.append("-");
-        output.append(second);
-        output.append(" ");
-        output.append(stmt.deviceNode.object.value);
-        output.append("s\n\n");
-        output.append("Which is ");
-        int total = second - first;
-        output.append(total);
-        output.append(" ");
-        output.append(stmt.deviceNode.object.value);
-        output.append("s");
-        output.append("\n\n");
-        for (int i = first; i <= second; i++){
+                String name = Integer.toString(i);
+                Token nameToken = new Token(Token.types.VALUE, name);
+                stmt.deviceName = new ObjectNameNode(nameToken);
+                StatementNode rangeStmt = new StatementNode(stmt.deviceNode, stmt.actionNode, stmt.deviceName, stmt.fieldNode, stmt.valueNode);
+                output.append(setValues(rangeStmt));
 
-            String name = Integer.toString(i);
-            Token nameToken = new Token(Token.types.VALUE, name);
-            stmt.deviceName = new ObjectNameNode(nameToken);
+            }
+
+            return output;
+        }
+
+        else if (stmt.rangeNode.type == RangeNode.types.COMA){
+            StringBuilder output = new StringBuilder();
+            String[] tokenValues = new String[stmt.rangeNode.tokenList.size()];
+            output.append("Comma separated range with size of ");
+            output.append(stmt.rangeNode.tokenList.size());
+            output.append("\n");
+
+            for(int i = 0; i < stmt.rangeNode.tokenList.size(); i++){
+
+                tokenValues[i] = stmt.rangeNode.tokenList.get(i).value;
+                output.append(stmt.fieldNode.field.value);
+                output.append(" : ");
+                output.append(tokenValues[i]);
+
+            }
+
+            Token rangeArray = new Token(Token.types.VALUE, tokenValues);
+            stmt.valueNode.value = rangeArray;
             StatementNode rangeStmt = new StatementNode(stmt.deviceNode, stmt.actionNode, stmt.deviceName, stmt.fieldNode, stmt.valueNode);
             output.append(setValues(rangeStmt));
+            return output;
 
         }
 
-        return output;
+        return null;
 
     }
     

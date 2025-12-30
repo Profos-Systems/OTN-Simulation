@@ -135,7 +135,7 @@ public class Parser {
             List <Token> tokenList = new ArrayList<>();
             while(peek() != null && (peek().type == Token.types.INT || peek().type == Token.types.RANGECOMA)){
 
-                if(peek().type == Token.types.INT){
+                if(peek().type == Token.types.INT || peek().type == Token.types.VALUE){
                 
                     tokenList.add(consume());
                 
