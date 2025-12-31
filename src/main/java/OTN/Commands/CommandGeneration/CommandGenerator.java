@@ -17,6 +17,7 @@ import java.util.List;
 import OTN.Commands.Parse.ParseTree.ObjectNameNode;
 import OTN.Commands.Parse.ParseTree.RangeNode;
 import OTN.Commands.Parse.ParseTree.StatementNode;
+import OTN.Commands.Parse.ParseTree.ValueNode;
 import OTN.Commands.Tokens.Token;
 import OTN.Network.Orchestration;
 import OTN.System.Devices.Cards.Transponder.Assets.Transponder;
@@ -287,26 +288,13 @@ public class CommandGenerator {
                 output.append(node.getName());
                 output.append("\n\n");
             }
-            case("PORT_COUNT") -> {
-
-                output.append("Changed port count of ");
-                output.append(stmt.deviceName.name.value);
-
-                node.setPortCount((int)stmt.valueNode.value.intValue);
-
-                output.append(" to ");
-                output.append(node.getPortCount());
-                output.append("\n\n");
-
-            }
             case("SITE") -> {
-
-                output.append("Changed sites on ");
+                output.append("Updated WSS Config for ");
                 output.append(stmt.deviceName.name.value);
+                output.append("\n\nNew Config:\n\n");
                 
                 node.setPortNames(stmt.valueNode.value.arrayValue);
 
-                output.append(" to ");
                 output.append(node.getSiteLayout());
 
             }
@@ -518,12 +506,13 @@ public class CommandGenerator {
                 output.append(stmt.fieldNode.field.value);
                 output.append(" : ");
                 output.append(tokenValues[i]);
+                output.append("\n");
 
             }
 
             Token rangeArray = new Token(Token.types.VALUE, tokenValues);
-            stmt.valueNode.value = rangeArray;
-            StatementNode rangeStmt = new StatementNode(stmt.deviceNode, stmt.actionNode, stmt.deviceName, stmt.fieldNode, stmt.valueNode);
+            ValueNode valueNode = new ValueNode(rangeArray);
+            StatementNode rangeStmt = new StatementNode(stmt.deviceNode, stmt.actionNode, stmt.deviceName, stmt.fieldNode, valueNode);
             output.append(setValues(rangeStmt));
             return output;
 

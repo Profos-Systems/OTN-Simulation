@@ -130,12 +130,12 @@ public class Parser {
 
         }
 
-        if((peek() != null) && (peek().type == Token.types.INT) && (peek(1) != null && peek(1).type == Token.types.RANGECOMA)){
+        if((peek() != null) && (peek().type == Token.types.VALUE) && (peek(1) != null && peek(1).type == Token.types.RANGECOMA)){
 
             List <Token> tokenList = new ArrayList<>();
-            while(peek() != null && (peek().type == Token.types.INT || peek().type == Token.types.RANGECOMA)){
+            while(peek() != null && (peek().type == Token.types.VALUE || peek().type == Token.types.RANGECOMA)){
 
-                if(peek().type == Token.types.INT || peek().type == Token.types.VALUE){
+                if(peek().type == Token.types.VALUE){
                 
                     tokenList.add(consume());
                 
@@ -161,6 +161,12 @@ public class Parser {
     }
 
     public List<StatementNode> parse(){
+
+        for(int i = 0; i < tokens.size(); i++){
+
+            System.out.println("Token " + i + "{\n\tType: " +tokens.get(i).type + "\n\tValue: "  + tokens.get(i).value + "\n}");
+
+        }
 
         List<StatementNode> statementNodes = new ArrayList<>();
 
@@ -205,47 +211,48 @@ public class Parser {
             }
 
             if(actionNode != null && actionNode.actionToken.value.equals("MODIFY")){
-                
+
                 if(peek() != null && peek().type == Token.types.FIELD){
-                    
-                    System.out.println("Field " + peek().value);
+
                     field = parseField();
+                    System.out.println("Field " + field.field.value);   
+
+                }
+
+                if (peek() != null) {
+    
+                    if (peek().type == Token.types.INT && peek(1) != null && peek(1).type == Token.types.RANGEHYPHEN) {
+
+                        rangeNode = parseRange();
+                        value = parseValue(); 
+                        statementNodes.add(new StatementNode(deviceNode, actionNode, field, rangeNode, value));
+                        continue;
                     
-                    System.out.println("Next Token Type " + peek(1).type);
-
-                    if((peek() != null && peek().type == Token.types.VALUE && peek(1) != null) && (peek(1).type == Token.types.VALUE || (peek(1).type == Token.types.INT && peek(2) == null || peek(2).type != Token.types.RANGECOMA || peek(2).type != Token.types.RANGEHYPHEN))) {
+                    } 
+                    
+         
+                    else if (peek().type == Token.types.VALUE) {
                         
-                        System.out.println("Name " + peek().value);
-                        System.out.println("Value " + peek(1).value);
                         deviceName = parseObjectName();
-                        value = parseValue();
-                                                
-                        if(deviceNode != null){
-
+                        
+                       
+                        if (peek() != null && peek(1) != null && peek(1).type == Token.types.RANGECOMA) {
+                        
+                            rangeNode = parseRange();
+                            statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, field, rangeNode));
+                            continue;
+                        
+                        } 
+                      
+                        else if (peek() != null && (peek().type == Token.types.VALUE || peek().type == Token.types.INT)) {
+                        
+                            value = parseValue();
                             statementNodes.add(new StatementNode(deviceNode, actionNode, deviceName, field, value));
                             continue;
                         
                         }
                     }
 
-                    else if(peek() != null && peek().type == Token.types.INT){
-
-                        rangeNode = parseRange();
-
-                        if(peek() != null && (peek().type == Token.types.VALUE ||(peek().type == Token.types.INT && (peek().type != Token.types.RANGECOMA || peek().type != Token.types.RANGEHYPHEN)))){
-                         
-                            value = parseValue();
-
-                        }
-
-                        if(deviceNode != null){
-
-                            statementNodes.add(new StatementNode(deviceNode, actionNode, field, rangeNode, value));
-                            continue;
-
-                        }
-
-                    }
                 }
             }
 

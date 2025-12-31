@@ -55,7 +55,7 @@ public class Tokenizer {
             
             switch (value) {
                 case "ROADM", "WSS", "WSS_PORT" , "TRANSPONDER_CARD", "TRANSPONDER", "FIBER" -> tokens.add(new Token(Token.types.OBJECT, value));
-                case "SPEED", "DUPLEX", "TX_POWER", "PORT_COUNT", "PORT_INDEX", "LENGTH", "A_SIDE", "Z_SIDE" , "WAVELENGTH", "FREQUENCY", "NAME", "SITE" -> tokens.add(new Token(Token.types.FIELD, value));
+                case "SPEED", "DUPLEX", "TX_POWER", "PORT_INDEX", "LENGTH", "A_SIDE", "Z_SIDE" , "WAVELENGTH", "FREQUENCY", "NAME", "SITE" -> tokens.add(new Token(Token.types.FIELD, value));
                 case "ADD", "MODIFY", "REMOVE" , "CREATE", "SET" -> tokens.add(new Token(Token.types.ACTION, value));
                 case "HELP" -> tokens.add(new Token(Token.types.HELP, value));
                 default -> tokens.add(new Token(Token.types.VALUE, value));
@@ -80,7 +80,9 @@ public class Tokenizer {
 
             buffer.setLength(0);
 
-            if((peek() != null) && peek().equals('-')){
+        }
+
+        else if((peek() != null) && peek().equals('-')){
 
                 buffer.append(consume());
 
@@ -88,9 +90,10 @@ public class Tokenizer {
 
                 tokens.add(new Token(Token.types.RANGEHYPHEN, range));
 
+                buffer.setLength(0); 
             }
 
-            if((peek() != null) && peek().equals(',')){
+        else if((peek() != null) && peek().equals(',')){
 
                 buffer.append(consume());
 
@@ -98,8 +101,7 @@ public class Tokenizer {
 
                 tokens.add(new Token(Token.types.RANGECOMA, range));
                 
-            }
-
+                buffer.setLength(0); 
         }
 
         else {

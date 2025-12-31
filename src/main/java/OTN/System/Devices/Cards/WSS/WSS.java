@@ -72,26 +72,6 @@ public class WSS{
         
     }
 
-    public void setPortCount(int portNum){
-
-        if (portNum < 1){
-
-            throw new IllegalArgumentException("Port count must be positive!");
-
-        }
-
-        portCount = portNum;
-        centerPortNumber = (portNum + 1) / 2;
-
-        TransponderCard mappedCard = new TransponderCard("Example", portCount);
-        ports = new WSSPort[portCount];
-        for(int i = 0; i < portCount; i++){
-
-            ports[i] = new WSSPort(sites[i], mappedCard.getPort(i));
-
-        }
-    }
-
     public int getPortCount(){
 
         return portCount;
@@ -100,6 +80,7 @@ public class WSS{
     public void setPortNames(String [] toSetSites){
 
         sites = toSetSites;
+        portCount = sites.length;
 
     }
 
@@ -118,23 +99,24 @@ public class WSS{
         StringBuilder sb = new StringBuilder();
         sb.append("This WSS has ");
         sb.append(portCount);
-        sb.append(" port(s).");
+        sb.append(" port(s).\n");
         sb.append("The physical center axis aligns with Port ");
         sb.append(centerPortNumber);
-        sb.append(" (Physical Index 0).");
+        sb.append(" (Physical Index 0).\n\n");
         sb.append("----------------------------------------");
         
         for(int i = 0; i < sites.length; i++){
             int portNumber = i + 1;
             int physicalIndex = getPhysicalIndex(portNumber);
-            sb.append("Port "); 
+            sb.append("\nPort "); 
             sb.append(portNumber);
-            sb.append("Phys Index: ");
+            sb.append("\nPhys Index: ");
             sb.append(physicalIndex);
-            sb.append("assigned to: ");
-            sb.append(sites[i]); 
+            sb.append("\nAssigned to: ");
+            sb.append(sites[i]);
+            sb.append("\n"); 
         }
-        sb.append("----------------------------------------");
+        sb.append("----------------------------------------\n");
 
         return sb;
     }

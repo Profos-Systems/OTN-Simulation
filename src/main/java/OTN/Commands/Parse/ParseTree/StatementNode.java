@@ -128,4 +128,15 @@ public class StatementNode {
 
     }
 
+    public StatementNode (ObjectNode device, ActionNode action, ObjectNameNode name, FieldNode field, RangeNode range){
+
+        deviceNode = device;
+        actionNode = action;
+        deviceName = name;
+        fieldNode = field;
+        rangeNode = range;
+        type = types.RANGEMOD;
+
+    }
+
 }
