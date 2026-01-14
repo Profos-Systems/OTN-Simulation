@@ -53,6 +53,7 @@ public class CommandGenerator {
 
                 switch(stmt.type){
 
+                    case StatementNode.types.ASSIGN -> outputs.append(mapCards(stmt));
                     case StatementNode.types.HELP -> outputs.append(helpCommandGenerate());
                     case StatementNode.types.RANGEINIT -> outputs.append(deviceRangeGenerate(stmt));
                     case StatementNode.types.INIT -> outputs.append(initCommandGenerate(stmt));
@@ -71,6 +72,65 @@ public class CommandGenerator {
         }
 
         return outputs;
+
+    }
+
+    private StringBuilder mapCards(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        switch(stmt.deviceNode.object.value){
+
+            case "ROADM" -> output = mapROADM(stmt);
+            case "WSS" -> output = mapWSS(stmt);
+            case "TRANSPONDER_CARD" -> output = mapTransponderCard(stmt);
+            case "WSS_PORT" -> output = mapWSSPort(stmt);
+            case "TRANSPONDER" -> output = mapTransponder(stmt);
+ 
+        }
+
+        return output;
+
+    }
+
+    private StringBuilder mapROADM(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        return output;
+
+    }
+
+    private StringBuilder mapWSS(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        return output;
+
+    }
+
+    private StringBuilder mapTransponderCard(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        return output;
+
+    }
+
+
+    private StringBuilder mapWSSPort(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        return output;
+
+    }
+
+    private StringBuilder mapTransponder(StatementNode stmt){
+
+        StringBuilder output = new StringBuilder();
+
+        return output;
 
     }
 
